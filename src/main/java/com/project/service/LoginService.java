@@ -20,7 +20,7 @@ public class LoginService {
 	UserVO vo;
 
 	public Object checkUser(UserVO vo) {
-		UserVO user = dao.getStep1(vo);
+		UserVO user = dao.getUser(vo);
 		int result = 0;
 		int cnt = 0;
 		if (user != null) {

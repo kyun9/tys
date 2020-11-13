@@ -11,8 +11,8 @@ public class LoginDAO {
 	@Autowired
 	SqlSession session = null;
 
-	// 아이디 확인
-	public UserVO getStep1(UserVO vo) {
+	// 회원정보 가져오기
+	public UserVO getUser(UserVO vo) {
 		String statement = "LoginMapper.getStep1";
 		vo = session.selectOne(statement, vo.getId());
 		return vo;
