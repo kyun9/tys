@@ -16,11 +16,6 @@
 	<%@ include file="./partials/header.jsp"%>
 	<!-- partial -->
 
-	<script>
-		<c:if test="${text!= null}">
-			alert("${text}");
-		</c:if>
-	</script>
 
 
 

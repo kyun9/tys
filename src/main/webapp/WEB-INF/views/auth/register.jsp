@@ -25,6 +25,7 @@
 	<form action="/tys/registerUser" method="POST">
 		<fieldset>
 			<legend>Register</legend>
+			<input type="file">
 			<input type="text" name="id" id="id" placeholder="아이디입력"><br>
 			<input type="password" name="pwd" id="pwd" placeholder="비번입력"><br>
 			<input type="password" id="pwdC" placeholder="비번확인"> <br>
