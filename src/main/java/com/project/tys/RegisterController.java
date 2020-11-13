@@ -28,6 +28,7 @@ public class RegisterController {
 		System.out.println(vo);
 		ModelAndView mav = new ModelAndView();
 		dao.setUser(vo);
+		mav.addObject("text", "정상적으로 회원 등록되었습니다.");
 		mav.setViewName("redirect:/");
 		return mav;
 	}

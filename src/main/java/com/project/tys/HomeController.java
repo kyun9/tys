@@ -32,7 +32,6 @@ public class HomeController {
 		if (vo != null) {
 			mav.addObject("userInfor", user);
 		}	
-		
 		mav.setViewName("home");
 		return mav;
 	}

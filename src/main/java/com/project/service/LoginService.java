@@ -25,7 +25,7 @@ public class LoginService {
 		int cnt = 0;
 		if (user != null) {
 			// 비활성화 여부 확인
-			if (user.getCheckn() == 5) {
+			if (user.getCheckn() >= 5) {
 				result=10;
 			} else {
 				if (vo.getPwd().equals(user.getPwd())) {
