@@ -23,18 +23,6 @@
 
 	<script>
 		function login() {
-			var idVal = $('#id').val();
-			var pwdVal = $('#pwd').val();
-
-			var data = {
-				id: idVal,
-				pwd: pwdVal
-			};
-			console.log(idVal);
-			console.log(pwdVal);
-			console.log(data);
-			console.log(JSON.stringify(data));
-			console.log($('#frm').serialize());
 			$.ajax({
 				url: "/tys/loginChk",
 				type: "POST",
@@ -61,10 +49,6 @@
 			})
 		}
 
-		// console.log('ddd');
-		// $("#btn").click(function(){
-
-		// 	});
 
 	</script>
 	<form id="frm">

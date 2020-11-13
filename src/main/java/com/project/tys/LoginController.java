@@ -38,13 +38,20 @@ public class LoginController {
 	@ResponseBody
 	@RequestMapping(value = "/loginChk", method = RequestMethod.POST)
 	public Object loginConfirm(HttpServletRequest request, HttpServletResponse response, UserVO vo) {
-
 		Map<String, Integer> map = (Map<String, Integer>) service.checkUser(vo);
 
 		if (map.get("status") == 9) {
 			UserVO user = dao.getUser(vo);
+			request.getSession().setMaxInactiveInterval(6000);
 			request.getSession().setAttribute("userInfo", user);
 		}
 		return map;
 	}
+
+	@RequestMapping(value = "/logout")
+	public String logout(HttpServletRequest request, HttpServletResponse response, UserVO vo) {
+		request.getSession().removeAttribute("userInfo");
+		return "home";
+	}
+
 }

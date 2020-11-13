@@ -28,12 +28,11 @@ public class HomeController {
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public ModelAndView home(HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView mav = new ModelAndView();
-		UserVO vo = (UserVO) request.getSession().getAttribute("userInfo");
-		if (request.getSession().getAttribute("userInfo") != null) {
-			UserVO user = dao.getUser(vo);
+		UserVO user = (UserVO) request.getSession().getAttribute("userInfo");
+		if (vo != null) {
 			mav.addObject("userInfor", user);
 		}	
-		mav.addObject("test", "test");
+		
 		mav.setViewName("home");
 		return mav;
 	}
