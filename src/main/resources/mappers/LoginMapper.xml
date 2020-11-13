@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="LoginMapper">
+
+	<!-- 아이디만 검색 -->
+	<select id="getStep1" parameterType="string"
+		resultType="com.project.vo.UserVO">
+		SELECT * FROM USER WHERE id = #{id}
+	</select>
+	
+	<!-- 로그인실패횟수 업데이트 -->
+	<update id="getStep2" parameterType="string">
+		UPDATE user SET checkn = checkn + 1 WHERE id=#{id}
+	</update>
+</mapper>

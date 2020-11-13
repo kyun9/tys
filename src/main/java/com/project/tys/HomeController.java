@@ -15,10 +15,6 @@ public class HomeController {
 	 */
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home() {
-		return "auth/login";
-	}
-	@RequestMapping(value = "/login", method = RequestMethod.GET)
-	public String temp() {
-		return "auth/login";
+		return "home";
 	}
 }

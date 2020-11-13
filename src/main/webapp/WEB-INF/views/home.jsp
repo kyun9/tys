@@ -14,8 +14,7 @@
 	<!-- partial:partials/header.jsp -->
 	<%@ include file="./partials/header.jsp"%>
 	<!-- partial -->
-
-
+	<a href="/tys/login">로그인</a>
 
 
 
