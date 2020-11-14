@@ -24,7 +24,7 @@
 	crossorigin="anonymous">
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 
-<title>Right now</title>
+<title>test</title>
 </head>
 
 <body>

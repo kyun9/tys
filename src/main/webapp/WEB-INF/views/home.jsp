@@ -9,7 +9,7 @@
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-<title>Right now</title>
+<title>test</title>
 </head>
 <body>
 	<!-- partial:partials/header.jsp -->
@@ -38,7 +38,7 @@
 		<button type="button" id="btn" onclick="javascript:moveSearchUser()">회원조회</button>
 		<button type="button" id="btn" onclick="javascript:moveRegister()">회원등록</button>
 		<br>
-		
+
 		<form class="form-inline my-2 my-lg-0">
 			<input class="form-control mr-sm-2" type="text" placeholder="Search">
 			<button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
