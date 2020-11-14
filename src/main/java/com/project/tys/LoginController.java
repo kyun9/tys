@@ -31,7 +31,14 @@ public class LoginController {
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public ModelAndView login(HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("auth/login");
+		String viewName ="";
+		if(request.getSession().getAttribute("userInfo")!=null) {
+			mav.addObject("text","이미 로그인되어있습니다.");
+			viewName="redirect:/";
+		}else {
+			viewName = "auth/login";
+		}
+		mav.setViewName(viewName);
 		return mav;
 	}
 
@@ -51,7 +58,7 @@ public class LoginController {
 	@RequestMapping(value = "/logout")
 	public String logout(HttpServletRequest request, HttpServletResponse response, UserVO vo) {
 		request.getSession().removeAttribute("userInfo");
-		return "home";
+		return "redirect:/login";
 	}
 
 }

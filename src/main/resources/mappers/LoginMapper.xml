@@ -14,4 +14,9 @@
 	<update id="getStep2" parameterType="string">
 		UPDATE user SET checkn = checkn + 1 WHERE id=#{id}
 	</update>
+	
+		<!-- 로그인 성공시 로그인실패횟수 업데이트 -->
+	<update id="updateChk" parameterType="string">
+		UPDATE user SET checkn = 0 WHERE id=#{id}
+	</update>
 </mapper>

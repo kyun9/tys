@@ -29,7 +29,8 @@ public class LoginService {
 				result=10;
 			} else {
 				if (vo.getPwd().equals(user.getPwd())) {
-					// 로그인 성공
+					// 로그인 성공 - 체크카운트 초기화
+					dao.updateChk(vo);
 					result = 9;
 				} else {
 					// 비밀번호 틀림

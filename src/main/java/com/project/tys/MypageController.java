@@ -9,26 +9,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.project.dao.RegisterDAO;
 import com.project.vo.UserVO;
 
 @Controller
-public class RegisterController {
+public class MypageController {
 	@Autowired
-	RegisterDAO dao;
-	
-	
-	@RequestMapping(value = "/register", method = RequestMethod.GET)
-	public String register(HttpServletRequest request, HttpServletResponse response) {
-		return "/auth/register";
-	}
+	UserVO vo;
 
-	@RequestMapping(value = "/registerUser", method = RequestMethod.POST)
-	public ModelAndView registerUser(HttpServletRequest request, HttpServletResponse response, UserVO vo) {
-		System.out.println(vo);
+	@RequestMapping(value = "/mypage", method = RequestMethod.GET)
+	public ModelAndView register(HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView mav = new ModelAndView();
-		dao.setUser(vo);
-		mav.setViewName("redirect:/");
+		UserVO user = (UserVO) request.getSession().getAttribute("userInfo");
+		
+		mav.addObject("userInfo", user);
+		mav.setViewName("/auth/mypage");
+		
 		return mav;
 	}
 

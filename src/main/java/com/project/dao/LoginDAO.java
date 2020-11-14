@@ -18,12 +18,15 @@ public class LoginDAO {
 		return vo;
 	}
 
-
 	// 로그인실패 카운트
 	public void getStep2(UserVO vo) {
 		String statement = "LoginMapper.getStep2";
 		session.update(statement, vo.getId());
 	}
 
-	
+	// 로그인 성공하면 횟수 초기화하기
+	public void updateChk(UserVO vo) {
+		String statement = "LoginMapper.updateChk";
+		session.update(statement, vo.getId());
+	}
 }
