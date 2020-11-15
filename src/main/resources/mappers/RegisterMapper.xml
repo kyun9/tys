@@ -6,6 +6,13 @@
 
 	<!-- 유저 추가 -->
 	<insert id="setUser" parameterType="com.project.vo.UserVO">
-		INSERT INTO user VALUES (#{id},#{pwd},0);
+		INSERT INTO user VALUES
+		(#{id},#{pwd},0);
 	</insert>
+
+	<!-- 중복아이디 체크 -->
+	<select id="checkUser" parameterType="string"
+		resultType="com.project.vo.UserVO">
+		SELECT * FROM USER WHERE id = #{id}
+	</select>
 </mapper>

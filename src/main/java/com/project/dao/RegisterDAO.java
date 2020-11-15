@@ -17,4 +17,15 @@ public class RegisterDAO {
 		session.insert(statement, vo);
 	}
 
+	//아이디 중복체크
+	public int checkUser(String id) {
+		String statement = "RegisterMapper.checkUser";
+		int result=0;
+		if(session.selectOne(statement, id)!=null) {
+			result=2;
+		}else {
+			result=1;
+		}
+		return result;
+	}
 }
