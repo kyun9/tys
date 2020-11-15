@@ -7,7 +7,7 @@
 	<!-- 유저 추가 -->
 	<insert id="setUser" parameterType="com.project.vo.UserVO">
 		INSERT INTO user VALUES
-		(#{id},#{pwd},0);
+		(#{id},#{pwd},0, #{img});
 	</insert>
 
 	<!-- 중복아이디 체크 -->

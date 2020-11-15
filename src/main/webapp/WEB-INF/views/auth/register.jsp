@@ -85,22 +85,47 @@
 				registerForm.submit();
 			}
 		}
+		
+		function changeImg(){
+
+			var form = $('#registerForm')[0];
+		    var formData = new FormData(form)
+			
+			alert(img);
+			$.ajax({
+				type:"post",
+				enctype:"multipart/form-data",
+				url:"/tys/imgChk",
+				data: formData,
+				contentType : false,
+		        processData : false, 
+				success: function (data) {
+					alert(data);
+					$("#photo").attr("src", "/tys/resources/temp/"+data);
+				},
+				error: function () {
+					alert("에러입니다");
+				}
+			})
+		}
+		
+		
 	</script>
 
 
 
 
-	<form action="/tys/registerUser" method="POST" name="registerForm" enctype="multipart./form-data">
+	<form action="/tys/registerUser" method="post" name="registerForm" id="registerForm" enctype="multipart/form-data">
 		<fieldset>
 			<legend>Register</legend>
-			<img src="/tys/resources/static/default.png" width="150px" height="150px" />
-			<br><input type="file" name="image" id="image" placeholder="이미지 선택">
+			<img src="/tys/resources/static/default.png"  id="photo" width="150px" height="150px" />
+			<br><input type="file" name="img" id="img" placeholder="이미지 선택" accept="image/*" onchange="changeImg();">
 			<br><input type="text" name="id" id="id" placeholder="아이디입력"> 
 			<input type="button" id="idCheck" value="중복확인" onclick="javascript:idChk()" /> <div id="idBox" ></div>
 			<br> <input type="password" name="pwd" id="pwd" placeholder="비번입력">
 			<br> <input type="password" id="pwd2" placeholder="비번확인">
 			<div id="pwdChk" ></div>
-			<br> <input OnClick = "goToEnroll(); " type="button"  value="등록" />
+			<br> <input onclick = "goToEnroll(); " type="button"  value="등록" />
 		</fieldset>
 	</form>
 

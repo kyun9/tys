@@ -25,6 +25,7 @@
 	<h3>My Page</h3>
 	${userInfo.id}의 마이페이지입니다.
 
+	<img src="/tys/resources/users/${userInfo.img}" width="150px" height="150px" />
 	<a href="#">회원수정</a>
 	<a href="#">작성글보기</a>
 
