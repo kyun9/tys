@@ -60,16 +60,23 @@ public class RegisterController {
 		return idChkNum;
 	}
 	
-	//이미지 ajax통신
+	//임시 이미지 ajax통신
 	@ResponseBody
 	@RequestMapping(value = "/imgChk", method = RequestMethod.POST ,produces = "application/text; charset=UTF-8")
 	public  String  imgConfirm(MultipartFile img) throws IOException {
-		System.out.println("img : "+ img);
 		String fileName = img.getOriginalFilename();
-		System.out.println(fileName);
-		imageUploadService.tempImagePath(img);
+		imageUploadService.setTempImage(img);
 
 		return fileName;
 	}
 	
+	
+	//이미지 ajax통신
+		@ResponseBody
+		@RequestMapping(value = "/deleteImg", method = RequestMethod.POST ,produces = "application/text; charset=UTF-8")
+		public  String  deleteImg(String url) throws IOException {
+			System.out.println(url);
+			imageUploadService.deleteTempImage(url);;
+			return "사진이 삭제되었습니다.";
+		}
 }

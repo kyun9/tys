@@ -22,29 +22,53 @@ public class ImageUploadService {
 	@Autowired
 	ServletContext context;
 
-	//회원가입할때 이미지 경로 및 저장
+	// 회원가입할때 이미지 경로 및 저장
 	public void getUsersImagePath(MultipartFile img) throws IOException {
 		String fileName = img.getOriginalFilename();
-		
-		System.out.println("이미지 저장되는 경로 : "+context.getRealPath("/") + "resources/users/" + fileName);
+
+		System.out.println("이미지 저장되는 경로 : " + context.getRealPath("/") + "resources/users/" + fileName);
 		File f = new File(context.getRealPath("/") + "resources/users/" + fileName);
 		FileOutputStream fos = new FileOutputStream(f);
-		
+
 		fos.write(img.getBytes());
 		fos.close();
 	}
-	
-	
-	//이미지 ajax 임시 업로드
-	public void tempImagePath(MultipartFile img) throws IOException {
+
+	// 이미지 ajax 임시 업로드
+	public void setTempImage(MultipartFile img) throws IOException {
 		String fileName = img.getOriginalFilename();
-		
-		System.out.println("이미지 저장되는 경로 : "+context.getRealPath("/") + "resources/temp/" + fileName);
-		String filePath=context.getRealPath("/") + "resources/temp/" + fileName;
+
+		System.out.println("이미지 저장되는 경로 : " + context.getRealPath("/") + "resources/temp/" + fileName);
+		String filePath = context.getRealPath("/") + "resources/temp/" + fileName;
 		File f = new File(filePath);
 		FileOutputStream fos = new FileOutputStream(f);
-		
+
 		fos.write(img.getBytes());
 		fos.close();
+	}
+
+	// 이미지 ajax 임시 업로드
+	public void deleteTempImage(String url) throws IOException {
+
+		String[] str = url.split("/");
+		String path = "";
+		for (int i = 2; i < str.length; i++) {
+			path += "/";
+			path += str[i];
+		}
+		System.out.println(path);
+
+		File file = new File(context.getRealPath("/") + path);
+		System.out.println(file);
+		if (file.exists()) {
+			if (file.delete()) {
+				System.out.println("파일삭제 성공");
+			} else {
+				System.out.println("파일삭제 실패");
+			}
+		} else {
+			System.out.println("파일이 존재하지 않습니다.");
+		}
+
 	}
 }

@@ -15,6 +15,7 @@
 	<title>test</title>
 </head>
 
+
 <body>
 	<!-- partial:partials/header.jsp -->
 	<%@ include file="../partials/header.jsp"%>
@@ -86,12 +87,11 @@
 			}
 		}
 		
+		//임시 사진 저장
 		function changeImg(){
-
 			var form = $('#registerForm')[0];
 		    var formData = new FormData(form)
 			
-			alert(img);
 			$.ajax({
 				type:"post",
 				enctype:"multipart/form-data",
@@ -100,7 +100,6 @@
 				contentType : false,
 		        processData : false, 
 				success: function (data) {
-					alert(data);
 					$("#photo").attr("src", "/tys/resources/temp/"+data);
 				},
 				error: function () {
@@ -109,6 +108,23 @@
 			})
 		}
 		
+		//임시사진 폴더에서 삭제
+		function deleteImg(){
+			var url = $("#photo").attr("src");
+			$.ajax({
+				type:"post",
+				url:"/tys/deleteImg",
+				data: {"url" : url},
+				success: function (data) {
+					alert(data);
+					$("#photo").attr("src", "/tys/resources/users/default.png");
+					$("#img").val("");
+				},
+				error: function () {
+					alert("에러입니다");
+				}
+			})
+		}
 		
 	</script>
 
@@ -120,6 +136,7 @@
 			<legend>Register</legend>
 			<img src="/tys/resources/static/default.png"  id="photo" width="150px" height="150px" />
 			<br><input type="file" name="img" id="img" placeholder="이미지 선택" accept="image/*" onchange="changeImg();">
+					<input type="button" id= "deleteTempImage" onclick="deleteImg()" value="사진삭제">
 			<br><input type="text" name="id" id="id" placeholder="아이디입력"> 
 			<input type="button" id="idCheck" value="중복확인" onclick="javascript:idChk()" /> <div id="idBox" ></div>
 			<br> <input type="password" name="pwd" id="pwd" placeholder="비번입력">
