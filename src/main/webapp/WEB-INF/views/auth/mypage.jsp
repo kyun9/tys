@@ -29,6 +29,62 @@
 	<a href="#">작성글보기</a>
 
 	<script>
+
+		//비밀번호 확인
+		$(function () {
+			$('#pwd2').blur(function () {
+				if ($('#pwd').val() != $('#pwd2').val()) {
+					if ($('#pwd2').val() != '') {
+						$('#pwdChk').text('비밀번호가 일치 하지않습니다.');
+						$('#pwdChk').css("color", "red");
+						$('#pwd2').val('');
+						$('#pwd2').focus();
+					}
+				} else {
+					$('#pwdChk').text('비밀번호가 일치합니다.');
+					$('#pwdChk').css("color", "green");
+				}
+			})
+		});
+
+		//이메일 유효성검사
+		function checkEmail() {
+			var email = $("#email").val();
+			var regEmail = /([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+			// 정규식 -전화번호 유효성 검사
+			var regPhone = /^((01[1|6|7|8|9])[1-9]+[0-9]{6,7})|(010[1-9][0-9]{7})$/;
+
+			if (email == "") {
+				alert('이메일주소를 입력 해 주세요');
+				email.focus();
+				return false;
+			} else {
+				if (!regEmail.test(email)) {
+					alert('이메일 주소가 유효하지 않습니다');
+					email.focus();
+					return false;
+				}
+			}
+		}
+
+		//회원등록처리
+		function goToEnroll() {
+			var pwd = $("#pwd").val();
+			var pwd2 = $("#pwd2").val();
+			var email = $("#email").val();
+
+			 if (pwd == "") {
+				alert("패스워드를 입력하세요");
+			} else if (pwd2 == "") {
+				alert("패스워드 확인하세요");
+			} else if (checkEmail()) {
+				alert("이메일을 확인하세요")
+			} else {
+				alert("성공적으로 수정되었습니다.");
+				updateForm.submit();
+			}
+		}
+
 		//미리보기 사진삭제
 		function deleteImg() {
 			$("#photo").attr("src",
@@ -59,7 +115,7 @@
 		}
 	</script>
 	<h1>회원 수정하기</h1>
-	<form method="get" action="/updateUserInfo" id="updateForm">
+	<form method="post" action="/tys/updateUserInfo" id="updateForm" name="registerForm" enctype="multipart/form-data">
 		<img src="/tys/resources/users/${userInfo.user_image}" id="photo" width="150px" height="150px" /><br>
 		<input type="file" name="user_image" id="img" placeholder="이미지 선택" accept="image/*"
 			onchange="previewImage(this);">
@@ -67,7 +123,7 @@
 		<br>이름 : ${userInfo.user_name}
 		<br>비밀번호 : <input type="password" name="user_pwd" id="pwd" placeholder="변경할 비밀번호를 입력하세요.">
 		<br>비밀번호확인: <input type="password" id="pwd2" placeholder="비밀번호확인">
-		<br>이메일 : <input type="email" name="user_email" id="email" placeholder="${userInfo.user_email}">
+		<br>이메일 : <input type="email" name="user_email" id="email" value="${userInfo.user_email}">
 		<br><input type="submit" value="수정하기" />
 	</form>
 

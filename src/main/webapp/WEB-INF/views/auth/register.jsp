@@ -83,36 +83,55 @@
 				alert("패스워드 확인하세요");
 			} else if (name == "") {
 				alert("이름을 확인하세요")
-			} else if (email == "") {
+			} else if (checkEmail()) {
 				alert("이메일을 확인하세요")
-			}
-			else {
+			} else {
 				alert("성공적으로 등록하였습니다.");
 				registerForm.submit();
 			}
 		}
 
-/* 		//임시 사진 저장
-		function changeImg() {
-			var form = $('#registerForm')[0];
-			var formData = new FormData(form)
+		//이메일 유효성검사
+		function checkEmail() {
+			var email = $("#email").val();
+			var regEmail = /([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+			// 정규식 -전화번호 유효성 검사
+			var regPhone = /^((01[1|6|7|8|9])[1-9]+[0-9]{6,7})|(010[1-9][0-9]{7})$/;
 
-			$.ajax({
-				type: "post",
-				enctype: "multipart/form-data",
-				url: "/tys/imgChk",
-				data: formData,
-				contentType: false,
-				processData: false,
-				success: function (data) {
-					$("#photo").attr("src", "/tys/resources/temp/" + data);
-				},
-				error: function () {
-					alert("에러입니다");
+			if (email == "") {
+				alert('이메일주소를 입력 해 주세요');
+				email.focus();
+				return false;
+			} else {
+				if (!regEmail.test(email)) {
+					alert('이메일 주소가 유효하지 않습니다');
+					email.focus();
+					return false;
 				}
-			})
+			}
 		}
- */
+
+		/* 		//임시 사진 저장
+				function changeImg() {
+					var form = $('#registerForm')[0];
+					var formData = new FormData(form)
+		
+					$.ajax({
+						type: "post",
+						enctype: "multipart/form-data",
+						url: "/tys/imgChk",
+						data: formData,
+						contentType: false,
+						processData: false,
+						success: function (data) {
+							$("#photo").attr("src", "/tys/resources/temp/" + data);
+						},
+						error: function () {
+							alert("에러입니다");
+						}
+					})
+				}
+		 */
 		//미리보기 사진삭제
 		function deleteImg() {
 			$("#photo").attr("src",
@@ -162,15 +181,28 @@
 			<div id="pwdChk"></div>
 			<br> 이름 : <input type="text" name="user_name" id="name">
 			<br> 이메일 : <input type="email" name="user_email" id="email">
-			<br> <label>부서선택</label> <select name="user_deptno" id="deptno">
-				<c:forEach var="dept" items="${dept}">
-					<option value="${dept.d_num}">${dept.d_name}</option>
-				</c:forEach>
-			</select> <br>
-			<label>직급선택</label> <select name="user_position" id="position">
-				<c:forEach var="position" items="${position}">
-					<option value="${position.p_num}">${position.p_name}</option>
-				</c:forEach>
+			<br>
+			<c:choose>
+				<c:when test="${positionInfo.p_num==1}">
+					<label>부서선택</label> <select name="user_deptno" id="deptno">
+						<c:forEach var="dept" items="${dept}">
+							<option value="${dept.d_num}">${dept.d_name}</option>
+						</c:forEach>
+					</select> <br>
+					<label>직급선택</label> <select name="user_position" id="position">
+						<c:forEach var="position" items="${position}">
+							<option value="${position.p_num}">${position.p_name}</option>
+						</c:forEach>
+				</c:when>
+				<c:otherwise>
+					<label>부서선택</label> <select name="user_deptno" id="deptno">
+						<option value="${deptInfo.d_num}">${deptInfo.d_name}</option></select><br>
+						<label>직급선택</label> <select name="user_position" id="position">
+							<option value="3">사원</option>
+						</select>
+				</c:otherwise>
+
+			</c:choose>
 			</select> <br> <input onclick="goToEnroll(); " type="button" value="등록" />
 		</fieldset>
 	</form>

@@ -28,4 +28,9 @@ public class RegisterDAO {
 		}
 		return result;
 	}
+	
+	public void updateUser(UserVO vo) {
+		String statement = "RegisterMapper.updateUser";
+		session.update(statement, vo.getUser_id());
+	}
 }
