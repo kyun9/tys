@@ -14,6 +14,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.project.dao.LoginDAO;
 import com.project.service.LoginService;
+import com.project.vo.DeptVO;
+import com.project.vo.PositionVO;
 import com.project.vo.UserVO;
 
 /**
@@ -26,16 +28,20 @@ public class LoginController {
 	@Autowired
 	UserVO vo;
 	@Autowired
+	PositionVO position;
+	@Autowired
+	DeptVO dept;
+	@Autowired
 	LoginDAO dao;
 
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public ModelAndView login(HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView mav = new ModelAndView();
-		String viewName ="";
-		if(request.getSession().getAttribute("userInfo")!=null) {
-			mav.addObject("text","이미 로그인되어있습니다.");
-			viewName="redirect:/";
-		}else {
+		String viewName = "";
+		if (request.getSession().getAttribute("userInfo") != null) {
+			mav.addObject("text", "이미 로그인되어있습니다.");
+			viewName = "redirect:/";
+		} else {
 			viewName = "auth/login";
 		}
 		mav.setViewName(viewName);
@@ -50,7 +56,12 @@ public class LoginController {
 		if (map.get("status") == 9) {
 			UserVO user = dao.getUser(vo);
 			request.getSession().setMaxInactiveInterval(6000);
+			// 유저세션
 			request.getSession().setAttribute("userInfo", user);
+			// 부서세션
+			request.getSession().setAttribute("deptInfo", dao.getDept(vo));
+			// 직급세션
+			request.getSession().setAttribute("positionInfo", dao.getPosition(vo));
 		}
 		return map;
 	}
@@ -58,6 +69,8 @@ public class LoginController {
 	@RequestMapping(value = "/logout")
 	public String logout(HttpServletRequest request, HttpServletResponse response, UserVO vo) {
 		request.getSession().removeAttribute("userInfo");
+		request.getSession().removeAttribute("deptInfo");
+		request.getSession().removeAttribute("positionInfo");
 		return "redirect:/login";
 	}
 

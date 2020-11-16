@@ -6,13 +6,12 @@
 
 	<!-- 유저 추가 -->
 	<insert id="setUser" parameterType="com.project.vo.UserVO">
-		INSERT INTO user VALUES
-		(#{id},#{pwd},0, #{img});
+		insert into users values (#{user_id},#{user_pwd},#{user_name}, #{user_email}, #{user_image}, #{user_deptno},#{user_position},0)
 	</insert>
 
 	<!-- 중복아이디 체크 -->
 	<select id="checkUser" parameterType="string"
 		resultType="com.project.vo.UserVO">
-		SELECT * FROM USER WHERE id = #{id}
+		SELECT * FROM users WHERE user_id = #{user_id}
 	</select>
 </mapper>

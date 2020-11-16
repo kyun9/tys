@@ -30,7 +30,7 @@
 
 			<c:choose>
 				<c:when test="${userInfo!= null}">
-					<li class="nav-item"><a class="nav-link" href="#">${userInfo.id}님 반갑습니다.</a></li>
+					<li class="nav-item"><a class="nav-link" href="#">${userInfo.user_id} ${positionInfo.p_name}님 반갑습니다.</a></li>
 					<li class="nav-item"><a class="nav-link" href="/tys/mypage">마이페이지</a></li>
 					<li class="nav-item"><a class="nav-link" href="/tys/logout"
 						onclick="alert('로그아웃 되엇습니다.');">로그아웃</a></li>

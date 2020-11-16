@@ -25,17 +25,17 @@ public class LoginService {
 		int cnt = 0;
 		if (user != null) {
 			// 비활성화 여부 확인
-			if (user.getCheckn() >= 5) {
+			if (user.getUser_checkn() >= 5) {
 				result=10;
 			} else {
-				if (vo.getPwd().equals(user.getPwd())) {
+				if (vo.getUser_pwd().equals(user.getUser_pwd())) {
 					// 로그인 성공 - 체크카운트 초기화
 					dao.updateChk(vo);
 					result = 9;
 				} else {
 					// 비밀번호 틀림
 					// 로그인실패 횟수 확인
-					cnt = user.getCheckn() + 1;
+					cnt = user.getUser_checkn() + 1;
 					if (cnt > 5) {
 						result = 3;
 					} else {

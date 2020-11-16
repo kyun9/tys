@@ -7,16 +7,32 @@
 	<!-- 아이디만 검색 -->
 	<select id="getStep1" parameterType="string"
 		resultType="com.project.vo.UserVO">
-		SELECT * FROM USER WHERE id = #{id}
+		SELECT * FROM users WHERE user_id = #{user_id}
 	</select>
-	
+
 	<!-- 로그인실패횟수 업데이트 -->
 	<update id="getStep2" parameterType="string">
-		UPDATE user SET checkn = checkn + 1 WHERE id=#{id}
+		UPDATE users SET user_checkn
+		= user_checkn + 1 WHERE user_id=#{user_id}
 	</update>
-	
-		<!-- 로그인 성공시 로그인실패횟수 업데이트 -->
+
+	<!-- 로그인 성공시 로그인실패횟수 업데이트 -->
 	<update id="updateChk" parameterType="string">
-		UPDATE user SET checkn = 0 WHERE id=#{id}
+		UPDATE users SET
+		user_checkn = 0 WHERE user_id=#{user_id}
 	</update>
+
+	<!-- 직위 가져오기 -->
+	<select id="getPositionName" parameterType="string"
+		resultType="com.project.vo.PositionVO">
+		SELECT * from users as u, position as p where
+		u.user_position = p.p_num and u.user_id= #{user_id}
+	</select>
+	
+	<!-- 부서 가져오기 -->
+	<select id="getDeptName" parameterType="string"
+		resultType="com.project.vo.DeptVO">
+		SELECT * from users as u, dept as d where
+		u.user_deptno = d.d_num and u.user_id= #{user_id}
+	</select>
 </mapper>

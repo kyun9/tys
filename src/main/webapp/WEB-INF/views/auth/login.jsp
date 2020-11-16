@@ -66,8 +66,8 @@
 
 	<br>
 	<form id="frm">
-		id : <input type="text" name="id" id="id"><br> pwd : <input
-			type="password" name="pwd" id="pwd">
+		id : <input type="text" name="user_id" id="id"><br> pwd : <input
+			type="password" name="user_pwd" id="pwd">
 		<button type="button" id="btn" onclick="javascript:login()">확인</button>
 	</form>
 

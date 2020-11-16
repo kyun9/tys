@@ -28,18 +28,18 @@
 				if ($('#pwd').val() != $('#pwd2').val()) {
 					if ($('#pwd2').val() != '') {
 						$('#pwdChk').text('비밀번호가 일치 하지않습니다.');
-						$('#pwdChk').css("color","red");
+						$('#pwdChk').css("color", "red");
 						$('#pwd2').val('');
 						$('#pwd2').focus();
 					}
 				} else {
 					$('#pwdChk').text('비밀번호가 일치합니다.');
-					$('#pwdChk').css("color","green");
+					$('#pwdChk').css("color", "green");
 				}
 			})
 		});
 
-		var check= false;
+		var check = false;
 		//아이디 중복체크
 		function idChk() {
 			var id = $('#id').val();
@@ -50,11 +50,11 @@
 				success: function (data) {
 					if (data == 1) {
 						$('#idBox').text('사용가능한 아이디입니다.');
-						$('#idBox').css("color","green");
+						$('#idBox').css("color", "green");
 						check = true;
 					} else {
 						$('#idBox').text(id + "는 이미 사용중인 아이디입니다.");
-						$('#idBox').css("color","red");
+						$('#idBox').css("color", "red");
 						$("#id").val("");
 						$("#id").focus();
 					}
@@ -69,11 +69,11 @@
 		function goToEnroll() {
 			var id = $("#id").val();
 			var pwd = $("#pwd").val();
-			var pwd2= $("#pwd2").val();
+			var pwd2 = $("#pwd2").val();
 
 			if (id == "") {
 				alert("id를 입력하세요.");
-			}else if(check==false){
+			} else if (check == false) {
 				alert("아이디중복 확인하세요");
 			}
 			else if (pwd == "") {
@@ -81,40 +81,40 @@
 			}
 			else if (pwd2 == "") {
 				alert("패스워드 확인하세요");
-			}else{
+			} else {
 				alert("성공적으로 등록하였습니다.");
 				registerForm.submit();
 			}
 		}
-		
+
 		//임시 사진 저장
-		function changeImg(){
+		function changeImg() {
 			var form = $('#registerForm')[0];
-		    var formData = new FormData(form)
-			
+			var formData = new FormData(form)
+
 			$.ajax({
-				type:"post",
-				enctype:"multipart/form-data",
-				url:"/tys/imgChk",
+				type: "post",
+				enctype: "multipart/form-data",
+				url: "/tys/imgChk",
 				data: formData,
-				contentType : false,
-		        processData : false, 
+				contentType: false,
+				processData: false,
 				success: function (data) {
-					$("#photo").attr("src", "/tys/resources/temp/"+data);
+					$("#photo").attr("src", "/tys/resources/temp/" + data);
 				},
 				error: function () {
 					alert("에러입니다");
 				}
 			})
 		}
-		
+
 		//임시사진 폴더에서 삭제
-		function deleteImg(){
+		function deleteImg() {
 			var url = $("#photo").attr("src");
 			$.ajax({
-				type:"post",
-				url:"/tys/deleteImg",
-				data: {"url" : url},
+				type: "post",
+				url: "/tys/deleteImg",
+				data: { "url": url },
 				success: function (data) {
 					alert(data);
 					$("#photo").attr("src", "/tys/resources/users/default.png");
@@ -125,7 +125,7 @@
 				}
 			})
 		}
-		
+
 	</script>
 
 
@@ -134,15 +134,30 @@
 	<form action="/tys/registerUser" method="post" name="registerForm" id="registerForm" enctype="multipart/form-data">
 		<fieldset>
 			<legend>Register</legend>
-			<img src="/tys/resources/static/default.png"  id="photo" width="150px" height="150px" />
-			<br><input type="file" name="img" id="img" placeholder="이미지 선택" accept="image/*" onchange="changeImg();">
-					<input type="button" id= "deleteTempImage" onclick="deleteImg()" value="사진삭제">
-			<br><input type="text" name="id" id="id" placeholder="아이디입력"> 
-			<input type="button" id="idCheck" value="중복확인" onclick="javascript:idChk()" /> <div id="idBox" ></div>
-			<br> <input type="password" name="pwd" id="pwd" placeholder="비번입력">
-			<br> <input type="password" id="pwd2" placeholder="비번확인">
-			<div id="pwdChk" ></div>
-			<br> <input onclick = "goToEnroll(); " type="button"  value="등록" />
+			<img src="/tys/resources/static/default.png" id="photo" width="150px" height="150px" />
+			<br><input type="file" name="user_image" id="img" placeholder="이미지 선택" accept="image/*" onchange="changeImg();">
+			<input type="button" id="deleteTempImage" onclick="deleteImg()" value="사진삭제">
+			<br><input type="text" name="user_id" id="id" placeholder="아이디입력">
+			<input type="button" id="idCheck" value="중복확인" onclick="javascript:idChk()" />
+			<div id="idBox"></div>
+			<br> <input type="password" name="user_pwd" id="pwd" placeholder="비번입력">
+			<br> <input type="password" id="pwd2" placeholder="비번확인"><div id="pwdChk"></div>
+			<br> 이름 : <input type="text" name="user_name" id="name">
+			<br> 이메일 : <input type="email" name="user_email" id="email">
+			<br> <label>부서선택</label>
+			<select name="user_deptno" id="deptno">
+				<option value="1" selected>인사팀</option>
+				<option value="2">개발팀</option>
+				<option value="3">영업팀</option>
+				<option value="4">솔루션팀</option>
+			</select>
+			<br><label>직급선택</label>
+			<select name="user_position" id="position">
+				<option value="1">총괄관리자</option>
+				<option value="2">부서관리자</option>
+				<option value="3" selected>일반사원</option>
+			</select>
+			<br> <input onclick="goToEnroll(); " type="button" value="등록" />
 		</fieldset>
 	</form>
 

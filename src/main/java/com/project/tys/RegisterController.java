@@ -31,21 +31,26 @@ public class RegisterController {
 
 	//회원등록하기
 	@RequestMapping(value = "/registerUser", method = RequestMethod.POST)
-	public ModelAndView registerUser(String id, String pwd, MultipartFile img) throws IOException {
-		String fileName = img.getOriginalFilename();
+	public ModelAndView registerUser(String user_id, String user_pwd, String user_name, String user_email, int user_deptno, int user_position, MultipartFile user_image) throws IOException {
+		String fileName = user_image.getOriginalFilename();
 
 		UserVO user = new UserVO();
-		user.setId(id);
-		user.setPwd(pwd);
+		user.setUser_id(user_id);;
+		user.setUser_pwd(user_pwd);
+		user.setUser_name(user_name);
+		user.setUser_email(user_email);
+		user.setUser_deptno(user_deptno);
+		user.setUser_position(user_position);
 		
 		System.out.println(fileName+"///fileName");
 		//이미지 파일을 업로드안했을때
 		if(fileName.equals("")) {
-			user.setImg("default.png");
+			user.setUser_image("default.png");
 		}else { //이미지 파일 업로드되었을 때
-			user.setImg(fileName);
-			imageUploadService.getUsersImagePath(img);
+			user.setUser_image(fileName);
+			imageUploadService.getUsersImagePath(user_image);
 		}
+		System.out.println(user);
 		ModelAndView mav = new ModelAndView();
 		dao.setUser(user);
 		mav.setViewName("redirect:/");
@@ -63,9 +68,9 @@ public class RegisterController {
 	//임시 이미지 ajax통신
 	@ResponseBody
 	@RequestMapping(value = "/imgChk", method = RequestMethod.POST ,produces = "application/text; charset=UTF-8")
-	public  String  imgConfirm(MultipartFile img) throws IOException {
-		String fileName = img.getOriginalFilename();
-		imageUploadService.setTempImage(img);
+	public  String  imgConfirm(MultipartFile user_image) throws IOException {
+		String fileName = user_image.getOriginalFilename();
+		imageUploadService.setTempImage(user_image);
 
 		return fileName;
 	}
