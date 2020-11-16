@@ -30,7 +30,7 @@
 
 			<c:choose>
 				<c:when test="${userInfo!= null}">
-					<li class="nav-item"><a class="nav-link" href="#">${userInfo.user_id} ${positionInfo.p_name}님 반갑습니다.</a></li>
+					<li class="nav-item"><a class="nav-link" href="#">${deptInfo.d_name} ${userInfo.user_id} ${positionInfo.p_name}님 반갑습니다.</a></li>
 					<li class="nav-item"><a class="nav-link" href="/tys/mypage">마이페이지</a></li>
 					<li class="nav-item"><a class="nav-link" href="/tys/logout"
 						onclick="alert('로그아웃 되엇습니다.');">로그아웃</a></li>
@@ -41,10 +41,6 @@
 			</c:choose>
 
 		</ul>
-		<form class="form-inline my-2 my-lg-0">
-			<input class="form-control mr-sm-2" type="text" placeholder="Search">
-			<button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
-		</form>
 	</div>
 </nav>
 <br>

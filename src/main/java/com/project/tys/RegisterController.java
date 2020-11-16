@@ -11,6 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.project.dao.RegisterDAO;
+import com.project.service.GetInfoService;
 import com.project.service.ImageUploadService;
 import com.project.service.RegisterService;
 import com.project.vo.UserVO;
@@ -23,10 +24,16 @@ public class RegisterController {
 	RegisterService service;
 	@Autowired
 	ImageUploadService imageUploadService;
+	@Autowired
+	GetInfoService getInfoService;
 	
 	@RequestMapping(value = "/register", method = RequestMethod.GET)
-	public String register() {
-		return "/auth/register";
+	public ModelAndView register() {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("auth/register");
+		mav.addObject("dept", getInfoService.getDeptList());
+		mav.addObject("position", getInfoService.getPositionList());
+		return mav;
 	}
 
 	//회원등록하기

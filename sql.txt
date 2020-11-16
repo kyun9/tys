@@ -1,17 +1,98 @@
 CREATE TABLE professor ( _id INT PRIMARY KEY AUTO_INCREMENT, name VARCHAR(32) NOT NULL, belong VARCHAR(12) DEFAULT 'FOO', phone VARCHAR(12) );
 show tables;
-desc professor;
+desc users;
+drop table professor;
+
 CREATE TABLE user ( id varchar(32) PRIMARY KEY,
 pwd VARCHAR(32) NOT NULL,
 checkn int(10) default 0,
 img  varchar(100)
 );
-insert into user values ('a','aaa',0, "default");	
-insert into user values ('b','bbb',0,"default");
-insert into user values ('c','ccc',0,"default");
-insert into user values ('d','ddd',0, "default");
-drop table user;
-truncate table user;
-select * from user;
+SELECT * from users as u, position as p where u.user_position = p.p_num  and u.user_id= "a";
+insert into user values ('a','aaa',0, "default.png");	
+insert into user values ('b','bbb',0,"default.png");
+insert into user values ('c','ccc',0,"default.png");
+insert into user values ('d','ddd',0, "default.png");
+drop table position;
+truncate table users;
+select * from user;	
 commit;
 SELECT checkn FROM USER WHERE id = 'a';
+SELECT * from users as u, dept as d where
+		u.user_deptno = d.d_num and u.user_id= "a";
+drop table notices;
+drop table boards;
+drop table users;
+drop table dept;
+drop table position;
+show tables;
+
+CREATE TABLE `users` (
+  `user_id` varchar(50) PRIMARY KEY,
+  `user_pwd` varchar(50) NOT NULL,
+  `user_name` varchar(50) NOT NULL,
+  `user_email` varchar(50) NOT NULL,
+  `user_image` varchar(50),
+  `user_deptno` int NOT NULL,
+  `user_position` int NOT NULL,
+  `user_checkn` int DEFAULT 0
+);
+	
+CREATE TABLE `boards` (
+  `b_num` int PRIMARY KEY AUTO_INCREMENT,
+  `b_title` varchar(255) NOT NULL,
+  `b_content` varchar(900) NOT NULL,
+  `b_date` datetime DEFAULT (now()),
+  `b_cnt` int NOT NULL,
+  `b_userid` varchar(50) NOT NULL,
+  `b_type` int NOT NULL,
+  `b_update` datetime DEFAULT (now()),
+  `b_updateuser` varchar(50) NOT NULL
+);
+
+CREATE TABLE `notices` (
+  `n_num` int PRIMARY KEY AUTO_INCREMENT,
+  `n_title` varchar(255) NOT NULL,
+  `n_content` varchar(900) NOT NULL,
+  `n_date` datetime DEFAULT (now()),
+  `n_cnt` int NOT NULL,
+  `n_userid` varchar(50) NOT NULL,
+  `n_type` int NOT NULL,
+  `n_update` datetime DEFAULT (now()),
+  `n_updateuser` varchar(50) NOT NULL
+);
+
+CREATE TABLE `dept` (
+  `d_num` int PRIMARY KEY AUTO_INCREMENT,
+  `d_name` varchar(50) NOT NULL
+);
+
+CREATE TABLE `position` (
+  `p_num` int PRIMARY KEY AUTO_INCREMENT,
+  `p_name` varchar(50) NOT NULL
+);
+
+ALTER TABLE `boards` ADD FOREIGN KEY (`b_userid`) REFERENCES `users` (`user_id`) on delete cascade on update cascade;
+ALTER TABLE `notices` ADD FOREIGN KEY (`n_userid`) REFERENCES `users` (`user_id`) on delete cascade on update cascade;
+ALTER TABLE `users` ADD FOREIGN KEY (`user_deptno`) REFERENCES `dept` (`d_num`) on update cascade;
+ALTER TABLE `users` ADD FOREIGN KEY (`user_position`) REFERENCES `position` (`p_num`) on update cascade;
+ALTER TABLE `notices` ADD FOREIGN KEY (`n_type`) REFERENCES `dept` (`d_num`) on update cascade;
+ALTER TABLE `boards` ADD FOREIGN KEY (`b_type`) REFERENCES `dept` (`d_num`) on update cascade; 
+
+
+### ALTER TABLE [테이블명] ADD CONSTRAINT [제약조건이름] FOREIGN KEY(컬럼명) REFERENCES [부모테이블명](PK컬럼명) [ON DELETE CASCADE / ON UPDATE CASCADE];
+
+
+insert into dept values ('1','인사팀');
+insert into dept values ('2','개발팀');
+insert into dept values ('3','영업팀');
+insert into dept values ('4','솔루션팀');	
+select * from dept;
+
+insert into position values ('1','총괄관리자');
+insert into position values ('2','부서관리자');
+insert into position values ('3','일반사원');	
+select * from position;
+
+insert into users values ('a','aaa',"a", "a@a.a", "default.png", 1,1,0);
+select * from users;

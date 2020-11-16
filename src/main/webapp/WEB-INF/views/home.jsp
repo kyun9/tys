@@ -4,16 +4,16 @@
 <html lang="en">
 
 <head>
-<!-- Required meta tags -->
-<meta charset="utf-8">
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<!-- Required meta tags -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
 		integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
-<title>test</title>
+	<title>test</title>
 </head>
+
 <body>
 	<!-- partial:partials/header.jsp -->
 	<%@ include file="./partials/header.jsp"%>
@@ -35,22 +35,22 @@
 	</script>
 
 
-	<c:if test="${userInfo!= null}">
-		<button type="button" id="btn" onclick="javascript:moveBoard()">게시판</button>
-		<button type="button" id="btn" onclick="javascript:moveNotice()">공지사항</button>
-		<button type="button" id="btn" onclick="javascript:moveSearchUser()">회원조회</button>
+	<button type="button" id="btn" onclick="javascript:moveBoard()">게시판</button>
+	<button type="button" id="btn" onclick="javascript:moveNotice()">공지사항</button>
+	<button type="button" id="btn" onclick="javascript:moveSearchUser()">회원조회</button>
+	<c:if test="${userInfo.user_position != 3}">
 		<button type="button" id="btn" onclick="javascript:moveRegister()">회원등록</button>
-		<br>
-
-		<form class="form-inline my-2 my-lg-0">
-			<input class="form-control mr-sm-2" type="text" placeholder="Search">
-			<button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
-		</form>
-
 	</c:if>
+	<br>
+
+	<form class="form-inline my-2 my-lg-0">
+		<input class="form-control mr-sm-2" type="text" placeholder="Search">
+		<button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+	</form>
 
 
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
 		integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
 		crossorigin="anonymous"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"

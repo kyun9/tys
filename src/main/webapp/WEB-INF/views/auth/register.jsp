@@ -70,24 +70,29 @@
 			var id = $("#id").val();
 			var pwd = $("#pwd").val();
 			var pwd2 = $("#pwd2").val();
+			var name = $("#name").val();
+			var email = $("#email").val();
 
 			if (id == "") {
 				alert("id를 입력하세요.");
 			} else if (check == false) {
 				alert("아이디중복 확인하세요");
-			}
-			else if (pwd == "") {
+			} else if (pwd == "") {
 				alert("패스워드를 입력하세요");
-			}
-			else if (pwd2 == "") {
+			} else if (pwd2 == "") {
 				alert("패스워드 확인하세요");
-			} else {
+			} else if (name == "") {
+				alert("이름을 확인하세요")
+			} else if (email == "") {
+				alert("이메일을 확인하세요")
+			}
+			else {
 				alert("성공적으로 등록하였습니다.");
 				registerForm.submit();
 			}
 		}
 
-		//임시 사진 저장
+/* 		//임시 사진 저장
 		function changeImg() {
 			var form = $('#registerForm')[0];
 			var formData = new FormData(form)
@@ -107,23 +112,34 @@
 				}
 			})
 		}
-
-		//임시사진 폴더에서 삭제
+ */
+		//미리보기 사진삭제
 		function deleteImg() {
-			var url = $("#photo").attr("src");
-			$.ajax({
-				type: "post",
-				url: "/tys/deleteImg",
-				data: { "url": url },
-				success: function (data) {
-					alert(data);
-					$("#photo").attr("src", "/tys/resources/users/default.png");
-					$("#img").val("");
-				},
-				error: function () {
-					alert("에러입니다");
+			$("#photo").attr("src",
+				"/tys/resources/users/default.png");
+			$("#img").val("");
+		}
+
+		//사진 미리보기
+		function previewImage(f) {
+			var file = f.files;
+			// 확장자 체크
+			if (!/\.(gif|jpg|jpeg|png)$/i.test(file[0].name)) {
+				alert('gif, jpg, png 파일만 선택해 주세요.\n\n현재 파일 : ' + file[0].name);
+				// 선택한 파일 초기화
+				f.outerHTML = f.outerHTML;
+				document.getElementById('preview').innerHTML = '';
+			}
+			else {
+				// FileReader 객체 사용
+				var reader = new FileReader();
+				// 파일 읽기가 완료되었을때 실행
+				reader.onload = function (rst) {
+					$("#photo").attr("src", rst.target.result);
 				}
-			})
+				// 파일을 읽는다
+				reader.readAsDataURL(file[0]);
+			}
 		}
 
 	</script>
@@ -134,30 +150,28 @@
 	<form action="/tys/registerUser" method="post" name="registerForm" id="registerForm" enctype="multipart/form-data">
 		<fieldset>
 			<legend>Register</legend>
-			<img src="/tys/resources/static/default.png" id="photo" width="150px" height="150px" />
-			<br><input type="file" name="user_image" id="img" placeholder="이미지 선택" accept="image/*" onchange="changeImg();">
-			<input type="button" id="deleteTempImage" onclick="deleteImg()" value="사진삭제">
-			<br><input type="text" name="user_id" id="id" placeholder="아이디입력">
+			<img src="/tys/resources/static/default.png" id="photo" width="150px" height="150px" /> <br>
+			<input type="file" name="user_image" id="img" placeholder="이미지 선택" accept="image/*"
+				onchange="previewImage(this);">
+			<input type="button" id="deleteTempImage" onclick="deleteImg()" value="사진삭제"> <br>
+			<input type="text" name="user_id" id="id" placeholder="아이디입력">
 			<input type="button" id="idCheck" value="중복확인" onclick="javascript:idChk()" />
 			<div id="idBox"></div>
-			<br> <input type="password" name="user_pwd" id="pwd" placeholder="비번입력">
-			<br> <input type="password" id="pwd2" placeholder="비번확인"><div id="pwdChk"></div>
+			<br> <input type="password" name="user_pwd" id="pwd" placeholder="비번입력"> <br> <input type="password"
+				id="pwd2" placeholder="비번확인">
+			<div id="pwdChk"></div>
 			<br> 이름 : <input type="text" name="user_name" id="name">
 			<br> 이메일 : <input type="email" name="user_email" id="email">
-			<br> <label>부서선택</label>
-			<select name="user_deptno" id="deptno">
-				<option value="1" selected>인사팀</option>
-				<option value="2">개발팀</option>
-				<option value="3">영업팀</option>
-				<option value="4">솔루션팀</option>
-			</select>
-			<br><label>직급선택</label>
-			<select name="user_position" id="position">
-				<option value="1">총괄관리자</option>
-				<option value="2">부서관리자</option>
-				<option value="3" selected>일반사원</option>
-			</select>
-			<br> <input onclick="goToEnroll(); " type="button" value="등록" />
+			<br> <label>부서선택</label> <select name="user_deptno" id="deptno">
+				<c:forEach var="dept" items="${dept}">
+					<option value="${dept.d_num}">${dept.d_name}</option>
+				</c:forEach>
+			</select> <br>
+			<label>직급선택</label> <select name="user_position" id="position">
+				<c:forEach var="position" items="${position}">
+					<option value="${position.p_num}">${position.p_name}</option>
+				</c:forEach>
+			</select> <br> <input onclick="goToEnroll(); " type="button" value="등록" />
 		</fieldset>
 	</form>
 
