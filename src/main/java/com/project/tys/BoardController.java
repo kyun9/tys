@@ -1,0 +1,114 @@
+package com.project.tys;
+
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.project.service.BoardServiceI;
+import com.project.vo.BoardVO;
+
+/**
+ * Handles requests for the application home page.
+ */
+@Controller
+@RequestMapping("/board/*")
+public class BoardController {
+	
+	@Autowired
+	BoardServiceI boardService;
+	
+	
+	// 게시글 전체 불러오기
+	@RequestMapping(value = "/list")
+	public ModelAndView boardList() throws Exception {
+	
+		List<BoardVO> list = boardService.selectAll();
+		ModelAndView mv = new ModelAndView();
+		
+		mv.setViewName("board/board");
+		mv.addObject("list", list);
+		
+		return mv;
+	}
+	
+	// 클릭한 게시글의 상세보기
+	@RequestMapping(value="/boardDetail")
+	public ModelAndView boardDetail(@RequestParam("b_num") int b_num) {
+		
+		// 조회수 증가
+		boardService.hitUp(b_num);
+		
+		// 클릭한 게시글 정보 가져오기
+		BoardVO detail = boardService.boardDetail(b_num);
+		ModelAndView mv = new ModelAndView();
+		
+		mv.setViewName("board/boardDetail");
+		mv.addObject("detail", detail);
+		
+		return mv;
+	}
+	
+	// 게시글 삭제하기
+	@RequestMapping(value="/boardDelete")
+	public String boardDelete(@RequestParam("b_num") int b_num) {
+		
+		boardService.boardDelete(b_num);
+		
+		return "redirect:/board/list";
+		
+	}
+	
+	// 게시글 등록하기위한 화면으로 이동
+   @RequestMapping(value = "/write", method=RequestMethod.GET)
+   public String write(){
+      return "/board/write";
+   }
+   
+   // 게시물작성처리
+   @RequestMapping(value = "/insert", method=RequestMethod.POST)
+   public String insert(@ModelAttribute BoardVO vo) throws Exception{
+      boardService.create(vo);
+      return "redirect:/board/list";
+         
+   }
+   
+   // 게시글 수정하기위한 화면으로 이동
+   @RequestMapping(value = "/boardUpdate", method=RequestMethod.GET)
+   public String update(){
+      return "board/boardUpdate";
+   }
+   
+   //게시물 수정하기 처리
+   @RequestMapping(value = "update", method=RequestMethod.POST)
+   public String update(@ModelAttribute BoardVO vo) throws Exception{
+      boardService.update(vo);
+      return "redirect:/board/list";
+   }
+   
+   // 게시글 검색하기
+// 01. 게시글 조건 조회
+   @RequestMapping(value = "/selectedList")
+   public ModelAndView list(@RequestParam(defaultValue = "all") String searchOption,
+         @RequestParam(defaultValue = "") String keyword) throws Exception {
+      List<BoardVO> list = boardService.listAll(searchOption, keyword);
+      ModelAndView mav = new ModelAndView();
+
+      // 데이터를 맵에 저장
+      Map<String, Object> map = new HashMap<String, Object>();
+      map.put("list", list); // list
+      map.put("searchOption", searchOption); // 검색옵션
+      map.put("keyword", keyword); // 검색키워드
+      mav.addObject("map", map); // 맵에 저장된 데이터를 mav에 저장
+      mav.setViewName("board/selectedList"); // 뷰를 selectedList.jsp로 설정
+      return mav; // selectedList.jsp로 List가 전달된다.
+   }
+}

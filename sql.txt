@@ -81,7 +81,7 @@ ALTER TABLE `notices` ADD FOREIGN KEY (`n_userid`) REFERENCES `users` (`user_id`
 ALTER TABLE `notices` ADD FOREIGN KEY (`n_type`) REFERENCES `dept` (`d_num`) on delete cascade;
 ALTER TABLE `users` ADD FOREIGN KEY (`user_deptno`) REFERENCES `dept` (`d_num`);
 ALTER TABLE `users` ADD FOREIGN KEY (`user_position`) REFERENCES `position` (`p_num`);
-
+ALTER TABLE `boards` modify b_cnt int not null default 0;
 
 
 

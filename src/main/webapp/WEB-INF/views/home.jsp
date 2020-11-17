@@ -19,29 +19,7 @@
 	<%@ include file="./partials/header.jsp"%>
 	<!-- partial -->
 
-	<script>
-		function moveBoard() {
-			location.href = "/tys/board";
-		}
-		function moveNotice() {
-			location.href = "/tys/notice";
-		}
-		function moveSearchUser() {
-			location.href = "/tys/searchUser";
-		}
-		function moveRegister() {
-			location.href = "/tys/register";
-		}
-	</script>
-
-
-	<button type="button" id="btn" onclick="javascript:moveBoard()">게시판</button>
-	<button type="button" id="btn" onclick="javascript:moveNotice()">공지사항</button>
-	<button type="button" id="btn" onclick="javascript:moveSearchUser()">회원조회</button>
-	<c:if test="${userInfo.user_position != 3}">
-		<button type="button" id="btn" onclick="javascript:moveRegister()">회원등록</button>
-	</c:if>
-	<br>
+	
 
 	<form class="form-inline my-2 my-lg-0">
 		<input class="form-control mr-sm-2" type="text" placeholder="Search">

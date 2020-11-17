@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 다른 mapper와 중복되지 않도록 네임스페이스 기재 -->
+<mapper namespace="board">
+	<!-- 게시글 전체 불러오기 -->
+	<select id="selectAll" resultType="com.project.vo.BoardVO">
+		<![CDATA[
+        select * 
+        from boards 
+        order by b_num DESC
+    	]]>
+	</select>
+	
+	<!-- 게시글 조회하기 -->
+	<select id="boardDetail" resultType="com.project.vo.BoardVO" parameterType="int">
+		<![CDATA[
+        select * 
+        from boards 
+        where b_num = #{b_num}
+    	]]>
+	</select>
+	
+	<!-- 게시글 삭제하기 -->
+	<delete id="boardDelete" parameterType="int">
+		<![CDATA[
+        delete 
+        from boards 
+        where b_num = #{b_num}
+    	]]>
+	</delete>
+	
+	<!-- 게시글 등록하기 -->
+	<insert id="insert">
+      insert into boards(b_title, b_content, b_userid, b_type, b_updateuser)
+      values(
+         #{b_title},#{b_content}, #{b_userid}, #{b_type}, #{b_updateuser}
+      )
+   </insert>
+   
+    <!-- 게시물수정처리 -->
+   <update id="updateArticle" >
+	   update boards 
+	   SET 
+	      b_title = #{b_title},
+	      b_content = #{b_content},
+	      b_updateuser = #{b_updateuser},   <!-- 불확실.. -->
+	      b_update = now()   <!-- 불확실.. -->
+	   where b_num = #{b_num}
+   </update>
+   
+   <!-- 조회수 증가 -->
+   <update id="updateHit" parameterType="Integer">
+   <![CDATA[
+	   update boards 
+	   SET b_cnt = b_cnt + 1
+	   where b_num = #{b_num}
+	]]>
+   </update>
+   
+  <!-- 게시글 검색하기 -->
+  <select id="listAll" resultType="com.project.vo.BoardVO">
+      SELECT * from boards
+      <!-- WHERE절을 include 태그로 삽입 -->
+      <include refid="search"></include>
+      ORDER BY b_num DESC
+   </select>
+   
+   <!-- 반복되는 sql의 일부를 sql태그를 이용하여 따로 빼둘수 있다. -->
+   <sql id="search">
+      <choose>
+         <!-- 검색옵션이 전체 검색일 경우 -->
+         <when test="searchOption == 'all'">
+            WHERE b_title like CONCAT('%',#{keyword},'%')
+            OR b_content like CONCAT('%',#{keyword},'%')
+            OR b_userid like CONCAT('%',#{keyword},'%')
+         </when>
+         <!-- 전체 검색이 아닐 경우 -->
+         <otherwise>
+            <!--where content like '%222%'-->
+             WHERE ${searchOption} like CONCAT('%',#{keyword},'%')
+         </otherwise>
+      </choose>
+   </sql>
+  
+</mapper>

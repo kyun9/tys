@@ -28,11 +28,6 @@ public class HomeController {
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public ModelAndView home(HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView mav = new ModelAndView();
-		UserVO user = (UserVO) request.getSession().getAttribute("userInfo");
-		if (vo != null) {
-			mav.addObject("userInfor", user);
-		}	
-		mav.setViewName("home");
 		return mav;
 	}
 	

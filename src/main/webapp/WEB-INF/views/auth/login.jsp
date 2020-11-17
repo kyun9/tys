@@ -48,7 +48,7 @@
 						alert("비밀번호가 틀렸습니다. 5번이 넘어서 비활성화 되었습니다.");
 					} else if (data.status == 9) {
 						alert("로그인에 성공하였습니다");
-						location.href = "/tys";
+						location.href = "/tys/board/list";
 					} else if (data.status == 10) {
 						alert("비밀번호 5회실패하여 계정이 비활성화 되었습니다. \n 관리자한테 문의하세요.");
 					}

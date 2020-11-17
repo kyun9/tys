@@ -40,7 +40,7 @@ public class LoginController {
 		String viewName = "";
 		if (request.getSession().getAttribute("userInfo") != null) {
 			mav.addObject("text", "이미 로그인되어있습니다.");
-			viewName = "redirect:/";
+			viewName = "redirect:/board/list";
 		} else {
 			viewName = "auth/login";
 		}

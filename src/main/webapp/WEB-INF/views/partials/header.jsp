@@ -14,7 +14,7 @@
 
 <!-- 네이비게이터 -->
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-	<a class="navbar-brand" href="/tys"><img src="/tys/resources/static/logo.svg" style="float: left;width: 50px;"></a>
+	<a class="navbar-brand" href="/tys/board/list"><img src="/tys/resources/static/logo.svg" style="float: left;width: 50px;"></a>
 	<button class="navbar-toggler" type="button" data-toggle="collapse"
 		data-target="#navbarColor03" aria-controls="navbarColor03"
 		aria-expanded="false" aria-label="Toggle navigation">
@@ -39,3 +39,29 @@
 	</div>
 </nav>
 <br>
+
+
+<script>
+	function moveBoard() {
+		location.href = "/tys/board/list"; 
+	}
+	function moveNotice() {
+		location.href = "/tys/notice";
+	}
+	function moveSearchUser() {
+		location.href = "/tys/searchUser";
+	}
+	function moveRegister() {
+		location.href = "/tys/register";
+	}
+</script>
+
+
+<button type="button" id="btn" onclick="javascript:moveBoard()">게시판</button>
+<button type="button" id="btn" onclick="javascript:moveNotice()">공지사항</button>
+<button type="button" id="btn" onclick="javascript:moveSearchUser()">회원조회</button>
+<c:if test="${userInfo.user_position != 3}">
+	<button type="button" id="btn" onclick="javascript:moveRegister()">회원등록</button>
+</c:if>
+<br><br><br><br>
+
