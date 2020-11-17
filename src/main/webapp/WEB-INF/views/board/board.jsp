@@ -28,14 +28,16 @@
 	<h2>게시판</h2>
 
 	<!-- 키워드 검색 폼 -->
-	<form name="form1" method="post" action="/tys/board/selectedList" class="form-inline my-2 my-lg-0">
-		<select name="searchOption">
+	<form name="form1" method="get" action="/tys/board/selectedList" class="form-inline my-2 my-lg-0">
+		<select name="searchType">
 			<!-- 검색조건을 검색처리후 결과화면에 보여주기위해  c:out 출력태그 사용, 삼항연산자 -->
-			<option value="all" <c:out value="${map.searchOption == 'all'?'selected':''}" />>작성자+내용+제목</option>
-			<option value="b_userid" <c:out value="${map.searchOption == 'b_userid'?'selected':''}" />>작성자</option>
-			<option value="b_content" <c:out value="${map.searchOption == 'b_content'?'selected':''}" />>내용</option>
-			<option value="b_title" <c:out value="${map.searchOption == 'b_title'?'selected':''}" />>제목</option>
-		</select> <input class="form-control mr-sm-2" name="keyword" value="${map.keyword}"> <input type="submit"  class="btn btn-secondary my-2 my-sm-0" value="조회">
+			<option value="b_userid">작성자</option>
+			<option value="b_content">내용</option>
+			<option value="b_title">제목</option>
+		</select> 
+		<input type="hidden" value="search" id ="action" name="action">
+		<input class="form-control mr-sm-2" name="keyword"> 
+		<input type="submit"  class="btn btn-secondary my-2 my-sm-0" value="조회">
 		<button class="form-control mr-sm-2" type="button" id="btnWrite" onclick="moveWrite()">글쓰기</button>
 	</form>
 

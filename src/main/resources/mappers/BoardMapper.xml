@@ -60,6 +60,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	]]>
    </update>
    
+   
+   
+   <!-- 게시글 검색하기 -->
+  <select id="searchTypeList" resultType="com.project.vo.BoardVO" parameterType="hashMap">
+      SELECT * from boards
+      where #{searchType} like CONCAT('%',#{keyword},'%')
+   </select>
+  
+   
   <!-- 게시글 검색하기 -->
   <select id="listAll" resultType="com.project.vo.BoardVO">
       SELECT * from boards

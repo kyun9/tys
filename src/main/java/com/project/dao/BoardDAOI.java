@@ -28,5 +28,8 @@ public interface BoardDAOI {
 	// 게시글 검색하기
 	public List<BoardVO> listAll(String searchOption, String keyword);
 
+	public List<BoardVO> searchTypeList(String searchType, String keyword);
+	
+
 
 }

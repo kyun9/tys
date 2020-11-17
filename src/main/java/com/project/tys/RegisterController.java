@@ -60,7 +60,7 @@ public class RegisterController {
 		System.out.println(user);
 		ModelAndView mav = new ModelAndView();
 		dao.setUser(user);
-		mav.setViewName("redirect:/");
+		mav.setViewName("redirect:/board/list");
 		return mav;
 	}
 
