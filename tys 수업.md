@@ -68,7 +68,7 @@ server.xml -> context안에
 
 
 
-##### AJAX 방식
+##### AJAX 방식 3가지
 
 1. SERIALIZE 해서 객체로 받기
 
@@ -95,8 +95,8 @@ server.xml -> context안에
 
 
 ```mapper
-# 쿼리가 ?로 인식
-$ 쿼리를 값이 매핑으로 인식 (테이블명같이 변동이 안되는것에 사용)
+#{} 쿼리가 ?로 인식
+${} 쿼리를 값이 매핑으로 인식 (테이블명같이 변동이 안되는것에 사용)
 ```
 
 
@@ -121,6 +121,76 @@ interceptor핸들링,
 회원관리 수정
 
 
+
+### 사진업로드
+
+* 따로 AJAX를 통해 임시폴더를 만들고 사진을 관리(저장/삭제)할 필요가 없다.
+* JS를 통해 URL형식으로 미리보기를 만들수 있다.
+* 그리고나서 form태그의 등록을 통해 image의 value값을 보내주면된다.
+
+
+
+### **Transactional** 
+
+```java
+@Transactional
+public static void function{
+	....
+}
+```
+
+* 트랜잭션의 성질 ACID
+  * 원자성
+  * 일관성
+  * 격리성
+  * 지속성
+* 사용이유 
+  * 중간에 데이터처리에 있어서 전체적으로 트랜젹션을 관리할수 있따.
+  * 만약 작동하다 중단될시 전체를 Rollback을 통해 원래 상태로 되돌린다.
+  * 이상없이 완료가 되면 commit을 진행한다.
+
+
+
+### sqlSession Batch처리
+
+* 일반적인 sqlSession은 
+  * sqlsession.open -> 1개 작업 ->sqlSession.close 순서대로 진행된다.
+    * 만약 작업이 10000000개라면 어떨까?
+    * sqlsession을 열고 닫으면서 10000000개의 작업을 수행해야된다.
+  * 수행시간에 있어서 문제가 있을것이다.
+  * Batch를 사용해서
+    * sqlsession.open -> 10000000개 작업 ->sqlSession.close 을 수행할수 있따.
+    * 문제가 생길시 Rollback을 진행한다.
+
+
+
+### try catch
+
+* method를 호출해주는쪽에 try catch를 통해 예외처리를 해주면된다.
+* 각각해주면 좋지만 throw만 던져주고
+* 최종적으로 받는 곳에서 일치하는 Exception마다 예외를 받아주면된다.
+
+
+
+### 제약조건삭제
+
+```sql
+### 제약조건확인
+select * from information_schema.table_constraints where information_schema.table_constraints.table_schema = "#{dbName}";
+
+### 제약조건 삭제
+ALTER TABLE #{table} DROP CONSTRAINT #{제약조건삭제};
+```
+
+
+
+### table 내용날리기
+
+```sql
+delete from #{table명} //테이블 안에 데이터초기화
+truncate table users //테이블삭제
+drop table users //테이블삭제
+```
 
 
 

@@ -14,7 +14,7 @@
 
 <!-- 네이비게이터 -->
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-	<a class="navbar-brand" href="/tys">test</a>
+	<a class="navbar-brand" href="/tys"><img src="/tys/resources/static/logo.svg" style="float: left;width: 50px;"></a>
 	<button class="navbar-toggler" type="button" data-toggle="collapse"
 		data-target="#navbarColor03" aria-controls="navbarColor03"
 		aria-expanded="false" aria-label="Toggle navigation">
@@ -22,11 +22,6 @@
 	</button>
 	<div class="collapse navbar-collapse" id="navbarColor03">
 		<ul class="navbar-nav mr-auto">
-			<li class="nav-item active"><a class="nav-link" href="/test">A
-					<span class="sr-only">(current)</span>
-			</a></li>
-			<li class="nav-item"><a class="nav-link" href="#">B</a></li>
-			<li class="nav-item"><a class="nav-link" href="#">C</a></li>
 
 			<c:choose>
 				<c:when test="${userInfo!= null}">
