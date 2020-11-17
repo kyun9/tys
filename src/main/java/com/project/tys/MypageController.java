@@ -41,8 +41,12 @@ public class MypageController {
 			String user_email, MultipartFile user_image) throws IOException {
 		ModelAndView mav = new ModelAndView();
 		UserVO user = (UserVO) request.getSession().getAttribute("userInfo");
-
-		user.setUser_pwd(user_pwd);
+		
+		System.out.println(user_pwd);
+		//예외처리 필요
+		if(!user_pwd.equals("") && user_pwd !=null) {
+			user.setUser_pwd(user_pwd);
+		}
 		user.setUser_email(user_email);
 		
 		String fileName = user_image.getOriginalFilename();
@@ -52,10 +56,10 @@ public class MypageController {
 			user.setUser_image(fileName);
 			imageUploadService.getUsersImagePath(user_image);
 		}
-		
+		System.out.println(user);
 		dao.updateUser(user);
-		
-		mav.setViewName("/auth/mypage");
+		System.out.println();
+		mav.setViewName("redirect:/mypage");
 
 		return mav;
 	}

@@ -60,6 +60,7 @@ public class RegisterController {
 		System.out.println(user);
 		ModelAndView mav = new ModelAndView();
 		dao.setUser(user);
+		mav.addObject("text", "성공적으로 수정되었습니다.");
 		mav.setViewName("redirect:/board/list");
 		return mav;
 	}

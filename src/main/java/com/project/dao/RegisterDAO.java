@@ -31,6 +31,11 @@ public class RegisterDAO {
 	
 	public void updateUser(UserVO vo) {
 		String statement = "RegisterMapper.updateUser";
-		session.update(statement, vo.getUser_id());
+		System.out.println("registerdao"+ vo);
+		if(session.update(statement, vo) !=1) {
+			System.out.println("성공");
+		}else {
+			System.out.println("실패");
+		}
 	}
 }
