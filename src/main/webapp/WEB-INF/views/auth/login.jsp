@@ -22,12 +22,14 @@
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
 	integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
 	crossorigin="anonymous">
+	<link rel="stylesheet" type="text/css" href="./resources/css/style.css" />
+
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 
 <title>test</title>
 </head>
 
-<body>
+<body width="100%" height="100%" style="background-color:#f8f9fa!important">
 
 	<script>
 		function login() {
@@ -65,10 +67,26 @@
 	</c:if>
 
 	<br>
-	<form id="frm">
-		id : <input type="text" name="user_id" id="id"><br>
+	<form id="frm" class="loginForm">
+
+		<h2>Login</h2>
+		<div class="idForm">
+		  <input type="text" class="id" name="user_id" id="id" placeholder="ID">
+		</div>
+		<div class="passForm">
+		  <input type="password" class="pw" name="user_pwd" id="pwd" placeholder="PW">
+		</div>
+		<button type="button" class="btn" id="btn" onclick="javascript:login()">
+		  LOG IN
+		</button>
+		<div class="bottomText">
+		  Don't you have ID? <a href="#">sign up</a>
+		</div>
+
+
+		<!-- id : <input type="text" name="user_id" id="id"><br>
 		pwd : <input type="password" name="user_pwd" id="pwd">
-		<button type="button" id="btn" onclick="javascript:login()">확인</button>
+		<button type="button" id="btn" onclick="javascript:login()">확인</button> -->
 	</form>
 
 
