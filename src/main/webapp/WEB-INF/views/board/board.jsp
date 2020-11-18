@@ -61,13 +61,13 @@
 		</tr>
 		</thead>
 		
-		<c:if test="${list } eq null">
+		<c:if test="${rlist } eq null">
 			<tr>
 				<td colspan="5">등록된 게시글이 없습니다.</td>
 			</tr>
 		</c:if>
 
-		<c:forEach var="row" items="${list }">
+		<c:forEach var="row" items="${rlist }">
 			<tr>
 				<td><c:out value="${row.b_num}"></c:out></td>
 				<td><a href="/tys/board/boardDetail?b_num=${row.b_num}"> <c:out

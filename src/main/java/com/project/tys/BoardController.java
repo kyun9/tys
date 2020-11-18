@@ -46,17 +46,19 @@ public class BoardController {
 
 		PagingVO page = new PagingVO(boardService.countBoard(), Integer.parseInt(nowPage),
 				Integer.parseInt(cntPerPage));
+		List<BoardVO> rlist = boardService.selectAll();
 		List<BoardVO> list = boardService.selectBoard(page);
 		List<DeptVO> deptList = getInfoService.getDeptList();
 		
-		if (list != null) {
-			mv.addObject("list", list);
-		} else {
-			System.out.println("게시물 없음");
+		for(BoardVO d : rlist) {
+			System.out.println(d.getB_deptName());
+			
 		}
-
+		
+		
 		mv.setViewName("board/board");
 		mv.addObject("list", list);
+		mv.addObject("rlist", rlist);
 		mv.addObject("paging", page);
 		mv.addObject("deptList", deptList);
 		
