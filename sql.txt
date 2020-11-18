@@ -2,7 +2,8 @@ CREATE TABLE professor ( _id INT PRIMARY KEY AUTO_INCREMENT, name VARCHAR(32) NO
 show tables;
 desc users;
 drop table professor;
-
+UPDATE users SET user_pwd
+		= "aaa", user_email = "a@a.aa" , user_image="default.png" WHERE user_id="a";
 CREATE TABLE user ( id varchar(32) PRIMARY KEY,
 pwd VARCHAR(32) NOT NULL,
 checkn int(10) default 0,
@@ -15,7 +16,7 @@ insert into user values ('c','ccc',0,"default.png");
 insert into user values ('d','ddd',0, "default.png");
 drop table position;
 truncate table users;
-select * from user;	
+select * from users;	
 commit;
 SELECT checkn FROM USER WHERE id = 'a';
 SELECT * from users as u, dept as d where
@@ -26,8 +27,8 @@ drop table users;
 drop table dept;
 drop table position;
 show tables;
-
-
+delete from users;
+show tables;
 
 CREATE DATABASE tys_db DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;
 CREATE TABLE `users` (

@@ -15,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.project.dao.BoardDAOImpl;
 import com.project.service.BoardServiceI;
 import com.project.vo.BoardVO;
+import com.project.vo.PagingVO;
 
 /**
  * Handles requests for the application home page.
@@ -29,13 +30,31 @@ public class BoardController {
 
 	// 게시글 전체 불러오기
 	@RequestMapping(value = "/list")
-	public ModelAndView boardList() throws Exception {
-
-		List<BoardVO> list = boardService.selectAll();
+	public ModelAndView boardList(String nowPage, String cntPerPage) throws Exception {
 		ModelAndView mv = new ModelAndView();
+
+		if (nowPage == null && cntPerPage == null) {
+			nowPage = "1";
+			cntPerPage = "5"; // 페이지당 게시물 수
+		} else if (nowPage == null) {
+			nowPage = "1";
+		} else if (cntPerPage == null) {
+			cntPerPage = "5";
+		}
+
+		PagingVO page = new PagingVO(boardService.countBoard(), Integer.parseInt(nowPage),
+				Integer.parseInt(cntPerPage));
+		List<BoardVO> list = boardService.selectBoard(page);
+
+		if (list != null) {
+			mv.addObject("list", list);
+		} else {
+			System.out.println("게시물 없음");
+		}
 
 		mv.setViewName("board/board");
 		mv.addObject("list", list);
+		mv.addObject("paging", page);
 
 		return mv;
 	}
@@ -113,8 +132,10 @@ public class BoardController {
 //	}
 
 	@RequestMapping(value = "/selectedList", method = RequestMethod.GET)
-	public ModelAndView selectedList(String action, String searchType, String keyword) throws Exception {
+	public ModelAndView selectedList(String action, String searchType, String keyword, String nowPage,
+			String cntPerPage) throws Exception {
 		ModelAndView mav = new ModelAndView();
+
 		if (action != null && action.equals("search")) {
 			mav.addObject("list", dao.searchTypeList(searchType, keyword));
 		} else {
@@ -123,5 +144,4 @@ public class BoardController {
 		mav.setViewName("board/board");
 		return mav;
 	}
-
 }

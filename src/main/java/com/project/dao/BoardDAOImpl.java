@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.project.vo.BoardVO;
+import com.project.vo.PagingVO;
 
 // @Repository : 현재 클래스를 스프링에서 관리하는 dao bean으로 설정
 @Repository
@@ -62,6 +63,7 @@ public class BoardDAOImpl implements BoardDAOI {
 		map.put("keyword", keyword);
 		return sqlSession.selectList("board.listAll", map);
 	}
+
 	@Override
 	public List<BoardVO> searchTypeList(String searchOption, String keyword) {
 		// 검색옵션, 키워드 맵에 저장
@@ -71,5 +73,25 @@ public class BoardDAOImpl implements BoardDAOI {
 		return sqlSession.selectList("board.listAll", map);
 	}
 
+	// 전체 게시물 갯수
+	@Override
+	public int countBoard() throws Exception {
+		int count = sqlSession.selectOne("board.selectPageCount", null);
+
+		return count;
+	}
+
+	// 검색 게시물 갯수
+//	@Override
+//	public int countSearchBoard() throws Exception {
+//		int count = sqlSession.selectOne("board.listAllCount", null);
+//	   
+//		return count;
+//	}
+	// 게시물 목록
+	@Override
+	public List<BoardVO> selectBoard(PagingVO vo) throws Exception {
+		return sqlSession.selectList("board.selectBoard", vo);
+	}
 
 }

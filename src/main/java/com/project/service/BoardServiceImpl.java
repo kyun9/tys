@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.project.dao.BoardDAOI;
 import com.project.vo.BoardVO;
+import com.project.vo.PagingVO;
 
 
 @Service
@@ -59,6 +60,18 @@ public class BoardServiceImpl implements BoardServiceI{
 	@Override
 	public List<BoardVO> listAll(String searchOption, String keyword) throws Exception {
 		return boardDao.listAll(searchOption, keyword);
+	}
+	
+	//페이징처리
+	@Override
+	public int countBoard() throws Exception {
+		return boardDao.countBoard();
+	}
+	
+	@Override
+	public List<BoardVO> selectBoard(PagingVO vo) throws Exception {
+		
+		return boardDao.selectBoard(vo);
 	}
 	
 }

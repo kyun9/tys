@@ -3,7 +3,7 @@ package com.project.service;
 import java.util.List;
 
 import com.project.vo.BoardVO;
-
+import com.project.vo.PagingVO;
 public interface BoardServiceI {
 	
 	// 게시글 전체 목록 불러오기
@@ -26,4 +26,10 @@ public interface BoardServiceI {
    
    // 게시글 검색하기
    public List<BoardVO> listAll(String searchOption, String keyword) throws Exception;
+   
+   //페이징처리
+   //전체 게시물 갯수
+   public int countBoard() throws Exception;
+   //페이징 처리한 게시물 목록
+   public List<BoardVO> selectBoard(PagingVO vo) throws Exception;
 }
