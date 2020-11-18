@@ -31,6 +31,12 @@
 	<!-- 키워드 검색 폼 -->
 	<form name="form1" method="get" action="/tys/board/selectedList"
 		class="form-inline my-2 my-lg-0">
+		<select name="deptOption">
+			<option selected="selected" disabled="disabled">부서 선택</option>
+			<c:forEach var="dept" items="${deptList }">
+				<option value="${dept.d_name }"><c:out value="${dept.d_name }"></c:out></option>
+			</c:forEach>
+		</select>
 		<select name="searchType">
 			<!-- 검색조건을 검색처리후 결과화면에 보여주기위해  c:out 출력태그 사용, 삼항연산자 -->
 			<option value="b_userid">작성자</option>
@@ -49,6 +55,7 @@
 			<th>글번호</th>
 			<th width="150px">제목</th>
 			<th>작성자</th>
+			<th>부서명</th>
 			<th>등록날짜</th>
 			<th>조회수</th>
 		</tr>
@@ -67,6 +74,7 @@
 							value="${row.b_title }"></c:out>
 				</a></td>
 				<td><c:out value="${row.b_userid }"></c:out></td>
+				<td><c:out value="${row.b_deptName }"></c:out></td>
 				<td><c:out value="${row.b_date }"></c:out></td>
 				<td><c:out value="${row.b_cnt }"></c:out></td>
 			</tr>

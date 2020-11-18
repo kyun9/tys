@@ -43,7 +43,7 @@
 		location.href = "/tys/board/list"; 
 	}
 	function moveNotice() {
-		location.href = "/tys/notice";
+		location.href = "/tys/noticeBoard/list";
 	}
 	function moveSearchUser() {
 		location.href = "/tys/searchUser";

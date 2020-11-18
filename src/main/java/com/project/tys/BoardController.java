@@ -1,8 +1,6 @@
 package com.project.tys;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,7 +12,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.project.dao.BoardDAOImpl;
 import com.project.service.BoardServiceI;
+import com.project.service.GetInfoService;
 import com.project.vo.BoardVO;
+import com.project.vo.DeptVO;
 import com.project.vo.PagingVO;
 
 /**
@@ -27,7 +27,9 @@ public class BoardController {
 	BoardDAOImpl dao;
 	@Autowired
 	BoardServiceI boardService;
-
+	@Autowired
+	GetInfoService getInfoService;
+	
 	// 게시글 전체 불러오기
 	@RequestMapping(value = "/list")
 	public ModelAndView boardList(String nowPage, String cntPerPage) throws Exception {
@@ -45,7 +47,8 @@ public class BoardController {
 		PagingVO page = new PagingVO(boardService.countBoard(), Integer.parseInt(nowPage),
 				Integer.parseInt(cntPerPage));
 		List<BoardVO> list = boardService.selectBoard(page);
-
+		List<DeptVO> deptList = getInfoService.getDeptList();
+		
 		if (list != null) {
 			mv.addObject("list", list);
 		} else {
@@ -55,7 +58,8 @@ public class BoardController {
 		mv.setViewName("board/board");
 		mv.addObject("list", list);
 		mv.addObject("paging", page);
-
+		mv.addObject("deptList", deptList);
+		
 		return mv;
 	}
 

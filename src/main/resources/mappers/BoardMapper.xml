@@ -8,9 +8,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- 게시글 전체 불러오기 -->
 	<select id="selectAll" resultType="com.project.vo.BoardVO">
 		<![CDATA[
-        select * 
-        from boards 
-        order by b_num DESC
+        select b.*, d.d_name 'b_deptName'
+		from boards b join dept d on b.b_type = d.d_num
+		order by b.b_num desc;
     	]]>
 	</select>
 

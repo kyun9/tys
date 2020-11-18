@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 다른 mapper와 중복되지 않도록 네임스페이스 기재 -->
+<mapper namespace="noticeBoard">
+	<!-- 게시글 전체 불러오기 -->
+	<select id="selectAll" resultType="com.project.vo.NoticeBoardVO">
+		<![CDATA[
+        select * 
+        from notices 
+        order by n_num DESC
+    	]]>
+	</select>
+
+	<!-- 게시글 조회하기 -->
+	<select id="noticeBoardDetail"
+		resultType="com.project.vo.NoticeBoardVO" parameterType="int">
+		<![CDATA[
+        select * 
+        from notices 
+        where n_num = #{n_num}
+    	]]>
+	</select>
+
+	<!-- 게시글 삭제하기 -->
+	<delete id="noticeBoardDelete" parameterType="int">
+		<![CDATA[
+        delete 
+        from notices 
+        where n_num = #{n_num}
+    	]]>
+	</delete>
+
+	<!-- 게시글 등록하기 -->
+	<insert id="insert">
+		insert into notices(n_title, n_content, n_userid, n_type, n_updateuser)
+		values(
+		#{n_title},#{n_content}, #{n_userid}, #{n_type}, #{n_updateuser}
+		)
+	</insert>
+
+	<!-- 게시물수정처리 -->
+	<update id="updateArticle">
+		update notices
+		SET
+		n_title = #{n_title},
+		n_content = #{n_content},
+		n_updateuser = #{n_updateuser},   <!-- 불확실.. -->
+		n_update = now()   <!-- 불확실.. -->
+		where n_num = #{n_num}
+	</update>
+
+	<!-- 조회수 증가 -->
+	<update id="updateHit" parameterType="Integer">
+   <![CDATA[
+	   update notices 
+	   SET n_cnt = n_cnt + 1
+	   where n_num = #{n_num}
+	]]>
+	</update>
+
+	<!-- 게시글 검색하기 -->
+	<select id="listAll" resultType="com.project.vo.NoticeBoardVO">
+		SELECT * from notices
+		<!-- WHERE절을 include 태그로 삽입 -->
+		<include refid="search"></include>
+		ORDER BY n_num DESC
+	</select>
+
+	<!-- 반복되는 sql의 일부를 sql태그를 이용하여 따로 빼둘수 있다. -->
+	<sql id="search">
+		<choose>
+			<!-- 검색옵션이 전체 검색일 경우 -->
+			<when test="searchOption == 'all'">
+				WHERE n_title like CONCAT('%',#{keyword},'%')
+				OR n_content like CONCAT('%',#{keyword},'%')
+				OR n_userid like CONCAT('%',#{keyword},'%')
+			</when>
+			<!-- 전체 검색이 아닐 경우 -->
+			<otherwise>
+				<!--where content like '%222%' -->
+				WHERE ${searchOption} like CONCAT('%',#{keyword},'%')
+			</otherwise>
+		</choose>
+	</sql>
+	<!-- 페이징처리 -->
+	<select id="selectPageCount" resultType="int">
+		select count(*) from
+		notices
+	</select>
+
+	<!-- 페이징 처리 후 게시글 조회 -->
+	<select id="selectBoard" resultType="com.project.vo.NoticeBoardVO">
+   <![CDATA[
+		select n.* from (select @ROWNUM:=@ROWNUM+1 as RNUM, a.* from notices as a,
+                        (select @ROWNUM:=0) as r order by n_num DESC) as b
+                        where RNUM>=#{start} and RNUM<=#{end} 
+   ]]>
+	</select>
+</mapper>

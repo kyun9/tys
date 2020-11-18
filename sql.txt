@@ -83,6 +83,7 @@ ALTER TABLE `notices` ADD FOREIGN KEY (`n_type`) REFERENCES `dept` (`d_num`) on 
 ALTER TABLE `users` ADD FOREIGN KEY (`user_deptno`) REFERENCES `dept` (`d_num`);
 ALTER TABLE `users` ADD FOREIGN KEY (`user_position`) REFERENCES `position` (`p_num`);
 ALTER TABLE `boards` modify b_cnt int not null default 0;
+ALTER TABLE `notices` modify n_cnt int not null default 0;
 
 
 

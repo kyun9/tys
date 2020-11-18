@@ -19,7 +19,7 @@
 
 	<form name="updatForm" method="post" action="/tys/board/update">
 		<div>
-			수정자 <input name="b_updateuser" id="updateuser" size="80" value="세션에서 받아올 값" readonly="readonly">
+			수정자 <input name="b_updateuser" id="updateuser" size="5" value="${userInfo.user_id} " readonly="readonly">
 		</div>
 		
 		<div>
