@@ -11,7 +11,7 @@
 	<!-- Bootstrap CSS -->
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
 		integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-
+	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 	<title>test</title>
 </head>
 
@@ -165,46 +165,81 @@
 
 
 
-
 	<form action="/tys/registerUser" method="post" name="registerForm" id="registerForm" enctype="multipart/form-data">
-		<fieldset>
-			<legend>Register</legend>
-			<img src="/tys/resources/static/default.png" id="photo" width="150px" height="150px" /> <br>
-			<input type="file" name="user_image" id="img" placeholder="이미지 선택" accept="image/*"
-				onchange="previewImage(this);">
-			<input type="button" id="deleteTempImage" onclick="deleteImg()" value="사진삭제"> <br>
-			<input type="text" name="user_id" id="id" placeholder="아이디입력">
-			<input type="button" id="idCheck" value="중복확인" onclick="javascript:idChk()" />
-			<div id="idBox"></div>
-			<br> <input type="password" name="user_pwd" id="pwd" placeholder="비번입력"> <br> <input type="password"
-				id="pwd2" placeholder="비번확인">
-			<div id="pwdChk"></div>
-			<br> 이름 : <input type="text" name="user_name" id="name">
-			<br> 이메일 : <input type="email" name="user_email" id="email">
-			<br>
-			<c:choose>
-				<c:when test="${positionInfo.p_num==1}">
-					<label>부서선택</label> <select name="user_deptno" id="deptno">
-						<c:forEach var="dept" items="${dept}">
-							<option value="${dept.d_num}">${dept.d_name}</option>
-						</c:forEach>
-					</select> <br>
-					<label>직급선택</label> <select name="user_position" id="position">
-						<c:forEach var="position" items="${position}">
-							<option value="${position.p_num}">${position.p_name}</option>
-						</c:forEach>
-				</c:when>
-				<c:otherwise>
-					<label>부서선택</label> <select name="user_deptno" id="deptno">
-						<option value="${deptInfo.d_num}">${deptInfo.d_name}</option></select><br>
-						<label>직급선택</label> <select name="user_position" id="position">
-							<option value="3">사원</option>
-						</select>
-				</c:otherwise>
+		<div class="form-row align-items-center">
+			<fieldset>	
+				<legend>Register</legend>
+				<img src="/tys/resources/static/default.png" id="photo" width="150px" height="150px" /> <br>
+				<input type="file" name="user_image" id="img" placeholder="이미지 선택" accept="image/*"
+					onchange="previewImage(this);">
+				<input type="button" id="deleteTempImage" onclick="deleteImg()" value="사진삭제" class="btn-secondary"> <br>
 
-			</c:choose>
-			</select> <br> <input onclick="goToEnroll(); " type="button" value="등록" />
-		</fieldset>
+
+
+				<div class="form-group row">
+					<label for="inputEmail3" class="col-sm-2 col-form-label">아이디</label>
+					<div class="col-sm-10">
+						<input type="text" class="form-control" name="user_id" id="id" placeholder="아이디입력">
+						<input type="button" id="idCheck" value="중복확인" onclick="javascript:idChk()" class="btn-secondary" />
+						<div id="idBox"></div>
+					</div>
+				</div>
+
+				<div class="form-group row">
+					<label for="inputEmail3" class="col-sm-2 col-form-label">비밀번호</label>
+					<div class="col-sm-10">
+						<input type="password"class="form-control"  name="user_pwd" id="pwd" placeholder="비번입력"> <br>
+						<input type="password" class="form-control" id="pwd2" placeholder="비번확인">
+						<div id="pwdChk"></div>
+					</div>
+				</div>
+
+				<div class="form-group row">
+					<label for="inputEmail3" class="col-sm-2 col-form-label">이름</label>
+					<div class="col-sm-10">
+						<input type="text" name="user_name" id="name" class="form-control">
+					</div>
+				</div>
+
+				<div class="form-group row">
+					<label for="inputEmail3" class="col-sm-2 col-form-label">이메일</label>
+					<div class="col-sm-10">
+						<input type="email" name="user_email" id="email" class="form-control">
+					</div>
+				</div>
+
+				<div class="col-auto my-1">
+					<c:choose>
+						<c:when test="${positionInfo.p_num==1}">
+							<label>부서 선택</label>
+							<select name="user_deptno" id="deptno" class="custom-select mr-sm-2">
+								<c:forEach var="dept" items="${dept}">
+									<option value="${dept.d_num}">${dept.d_name}</option>
+								</c:forEach>
+							</select> <br>
+							<label>직급 선택</label>
+							<select name="user_position" id="position" class="custom-select mr-sm-2">
+								<c:forEach var="position" items="${position}">
+									<option value="${position.p_num}">${position.p_name}</option>
+								</c:forEach>
+							</select>
+						</c:when>
+						<c:otherwise>
+							<label>부서선택</label>
+							<select name="user_deptno" id="deptno" class="custom-select mr-sm-2">
+								<option value="${deptInfo.d_num}">${deptInfo.d_name}</option>
+							</select><br>
+							<label>직급선택</label>
+							<select name="user_position" id="position" class="custom-select mr-sm-2">
+								<option value="3">사원</option>
+							</select>
+						</c:otherwise>
+
+					</c:choose>
+				</div><br>
+				<input onclick="goToEnroll(); " type="button" class="btn btn-danger" value="등록" />
+			</fieldset>
+		</div>
 	</form>
 
 	<!-- Optional JavaScript -->

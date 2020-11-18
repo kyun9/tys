@@ -59,7 +59,7 @@ public class MypageController {
 		System.out.println(user);
 		dao.updateUser(user);
 		System.out.println();
-		mav.setViewName("redirect:/mypage");
+		mav.setViewName("redirect:/board/list");
 
 		return mav;
 	}
