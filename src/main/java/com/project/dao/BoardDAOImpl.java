@@ -94,4 +94,9 @@ public class BoardDAOImpl implements BoardDAOI {
 		return sqlSession.selectList("board.selectBoard", vo);
 	}
 
+	@Override
+	public List<BoardVO> searchTeam(int num) {
+		return sqlSession.selectList("board.searchTeam", num);
+	}
+
 }

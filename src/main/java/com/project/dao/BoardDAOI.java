@@ -36,5 +36,9 @@ public interface BoardDAOI {
 
 	// 게시물 목록
 	public List<BoardVO> selectBoard(PagingVO vo) throws Exception;
+	
+	//부서검색
+	public List<BoardVO> searchTeam(int num);
+	
 
 }

@@ -13,7 +13,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		order by b.b_num desc;
     	]]>
 	</select>
-
+	
+	<!-- 부서별 게시글 불러오기 -->
+	<select id="searchTeam" parameterType="int" resultType="com.project.vo.BoardVO">
+		<![CDATA[
+		select b.*, d.d_name 'b_deptName'
+		from boards b join dept d on b.b_type = d.d_num and b_type = #{num}
+		order by b.b_num desc;
+    	]]>
+	</select>
+	
 	<!-- 게시글 조회하기 -->
 	<select id="boardDetail" resultType="com.project.vo.BoardVO"
 		parameterType="int">

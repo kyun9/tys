@@ -31,12 +31,6 @@
 	<!-- 키워드 검색 폼 -->
 	<form name="form1" method="get" action="/tys/board/selectedList"
 		class="form-inline my-2 my-lg-0">
-		<select name="deptOption">
-			<option selected="selected" disabled="disabled">부서 선택</option>
-			<c:forEach var="dept" items="${deptList }">
-				<option value="${dept.d_name }"><c:out value="${dept.d_name }"></c:out></option>
-			</c:forEach>
-		</select>
 		<select name="searchType">
 			<!-- 검색조건을 검색처리후 결과화면에 보여주기위해  c:out 출력태그 사용, 삼항연산자 -->
 			<option value="b_userid">작성자</option>
@@ -48,46 +42,57 @@
 	</form>
 
 	<br>
-	<div class ="contianer" >
-	<table class="table table-bordered table-hover table-striped" style="width:50%;text-align: center;">
-		<thead>
-		<tr>
-			<th>글번호</th>
-			<th width="150px">제목</th>
-			<th>작성자</th>
-			<th>부서명</th>
-			<th>등록날짜</th>
-			<th>조회수</th>
-		</tr>
-		</thead>
-		
-		<c:if test="${rlist } eq null">
-			<tr>
-				<td colspan="5">등록된 게시글이 없습니다.</td>
-			</tr>
-		</c:if>
+	
+	<button class="btn btn-danger" type="button" id="${dept.d_name}"
+			onclick="location.href='/tys/board/list?teamNum=0'">전체</button>
+	<c:forEach var="dept" items="${deptList}">
+		<button class="btn btn-danger" type="button" id="${dept.d_name}"
+			onclick="location.href='/tys/board/list?teamNum=${dept.d_num}'">${dept.d_name}</button>
+	</c:forEach>
 
-		<c:forEach var="row" items="${rlist }">
-			<tr>
-				<td><c:out value="${row.b_num}"></c:out></td>
-				<td><a href="/tys/board/boardDetail?b_num=${row.b_num}"> <c:out
-							value="${row.b_title }"></c:out>
-				</a></td>
-				<td><c:out value="${row.b_userid }"></c:out></td>
-				<td><c:out value="${row.b_deptName }"></c:out></td>
-				<td><c:out value="${row.b_date }"></c:out></td>
-				<td><c:out value="${row.b_cnt }"></c:out></td>
-			</tr>
-		</c:forEach>
 
-	</table>
+	<br>
+	<div class="contianer">
+		<table class="table table-bordered table-hover table-striped"
+			style="width: 50%; text-align: center;">
+			<thead>
+				<tr>
+					<th>글번호</th>
+					<th width="150px">제목</th>
+					<th>작성자</th>
+					<th>부서명</th>
+					<th>등록날짜</th>
+					<th>조회수</th>
+				</tr>
+			</thead>
+
+			<c:if test="${rlist } eq null">
+				<tr>
+					<td colspan="5">등록된 게시글이 없습니다.</td>
+				</tr>
+			</c:if>
+
+			<c:forEach var="row" items="${rlist }">
+				<tr>
+					<td><c:out value="${row.b_num}"></c:out></td>
+					<td><a href="/tys/board/boardDetail?b_num=${row.b_num}"> <c:out
+								value="${row.b_title }"></c:out>
+					</a></td>
+					<td><c:out value="${row.b_userid }"></c:out></td>
+					<td><c:out value="${row.b_deptName }"></c:out></td>
+					<td><c:out value="${row.b_date }"></c:out></td>
+					<td><c:out value="${row.b_cnt }"></c:out></td>
+				</tr>
+			</c:forEach>
+
+		</table>
 	</div>
 	<hr>
 	<button class="btn btn-danger	" type="button" id="btnWrite"
-			onclick="moveWrite()">글쓰기</button>
-			
-	
-  
+		onclick="moveWrite()">글쓰기</button>
+
+
+
 	<br>
 	<nav aria-label="..." style="align-items:center; width: 50%; float:none; margin:0 auto">
 	<ul class="pagination pagination-sm" >	
