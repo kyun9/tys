@@ -54,8 +54,8 @@ div#headerBtn {
 	function moveNotice() {
 		location.href = "/tys/noticeBoard/list";
 	}
-	function moveSearchUser() {
-		location.href = "/tys/searchUser";
+	function moveSearchUser(userdeptno) {
+		location.href = "/tys/searchUser?user_deptno="+userdeptno;
 	}
 	function moveRegister() {
 		location.href = "/tys/register";
@@ -68,8 +68,7 @@ div#headerBtn {
 		onclick="javascript:moveBoard()">게시판</button>
 	<button type="button" class="btn btn-primary" value="notice" id="btn"
 		onclick="javascript:moveNotice()">공지사항</button>
-	<button type="button" class="btn btn-primary" value="user" id="btn"
-		onclick="javascript:moveSearchUser()">회원조회</button>
+	<button type="button" id="btn" class="btn btn-primary" onclick="javascript:moveSearchUser('${userInfo.user_deptno }')" value="${userInfo.user_deptno }">회원조회</button>
 	<c:if test="${userInfo.user_position != 3}">
 		<button type="button" class="btn btn-danger" value="regUser" id="btn"
 			onclick="javascript:moveRegister()">회원등록</button>

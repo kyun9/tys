@@ -67,11 +67,10 @@ input[type=text], select {
 		<input name="n_num" type="hidden" value="${detail.n_num }">
 		
 		<div>
-			작성자 : ${detail.n_userid}
-			<%-- <input name="n_userid" id="userid" size="80" value="${detail.n_userid}"   
-				readonly="readonly"> --%>
+			작성자 <input value="${detail.n_userid}" readonly="readonly" size="3">
+			수정자 <input value="${detail.n_updateuser}" readonly="readonly"
+				size="3">
 		</div>
-		
 		<div>
 			제목 <input name="n_title" id="title" size="80" value="${detail.n_title}"
 				readonly="readonly">
@@ -85,9 +84,16 @@ input[type=text], select {
 		
 
 		<div style="width: 650px; text-align: center;">
-			<button type="submit" class="btn btn-primary">수정하기</button>
-			<button id="noticeBoardDelete" class="btn btn-secondary">삭제하기</button>
-		</div>
+			<c:if
+				test="${(userInfo.user_position == 1) or (userInfo.user_id == detail.n_userid) or (userInfo.user_position == 2 and userInfo.user_deptno == detail.n_type) }">
+				<button type="submit" class="btn btn-primary">수정하기</button>
+			</c:if>
+			<!-- 총괄관리자 또는 이 게시글의 작성자 또는 해당 부서 관리자일 경우에만 삭제 버튼 표시 -->
+			<c:if
+				test="${(userInfo.user_position == 1) or (userInfo.user_id == detail.n_userid) or (userInfo.user_position == 2 and userInfo.user_deptno == detail.n_type) }">
+				<button id="boardDelete" class="btn btn-secondary">삭제하기</button>
+			</c:if>
+			</div>
 	</form>
 
 	
@@ -96,9 +102,9 @@ input[type=text], select {
 	<script>
 $(function() {
 	$("#noticeBoardDelete").click(function(){
-		alert("삭제하기 클릭");		
+		if (confirm("게시글을 삭제하시겠습니까?") == true) {
 		location.href='/tys/noticeBoard/noticeBoardDelete?n_num=${detail.n_num}';
-	});
+		}});
 });
 
 </script>

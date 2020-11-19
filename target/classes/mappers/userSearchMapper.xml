@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 다른 mapper와 중복되지 않도록 네임스페이스 기재 -->
+<mapper namespace="userSearchMapper">
+   <!-- 페이징처리 -->
+   <select id = "UserCount" resultType="Integer">
+   	select count(*) from users
+   </select>
+  
+  	<!-- 일반회원 검색 -->
+  	<select id = "UserCount1" resultType="Integer">
+   	select count(*) from users where user_deptno=#{user_deptno } 
+   </select>
+   <!-- 페이징 처리 후 회원 조회 -->
+   <select id="selectUser" resultType="UserVO">
+   <![CDATA[
+		select b.* from (select @ROWNUM:=@ROWNUM+1 as RNUM, a.*,d.d_name user_deptname,p.p_name user_posiname from users as a join dept d on a.user_deptno = d.d_num join position p on a.user_position = p.p_num,
+                        (select @ROWNUM:=0) as r order by user_name DESC) as b
+                        where RNUM>=#{start} and RNUM<=#{end}
+   ]]>
+   </select>
+   <!-- 일반회원인 경우 조회 쿼리 -->
+	<select id="selectUser1" resultType="UserVO">
+   <![CDATA[
+		select b.* from (select @ROWNUM:=@ROWNUM+1 as RNUM, a.*,d.d_name user_deptname,p.p_name user_posiname from users as a join dept d on a.user_deptno = d.d_num join position p on a.user_position = p.p_num,
+                        (select @ROWNUM:=0) as r order by user_name DESC) as b
+                        where  user_deptno=#{user_deptno} and RNUM>=#{start} and RNUM<=#{end}
+   ]]>
+   </select>
+   
+   <!-- 회원 삭제하기 -->
+	<delete id="deleteUser" parameterType="String">
+		<![CDATA[
+        delete 
+        from users
+        where user_id = #{user_id}
+    	]]>
+	</delete>
+	
+	<!-- 수정하고 싶은 회원 정보 찾기 -->
+	<select id="selectUpdateUser" resultType="com.project.vo.UserVO" parameterType="String">
+   <![CDATA[
+		select *,d.d_name user_deptname,p.p_name user_posiname from users as a join dept d on a.user_deptno = d.d_num join position p on a.user_position = p.p_num where user_id = #{user_id}
+   ]]>
+   </select>
+	<!-- 회원 정보 수정하기 -->
+	<update id="updateUser">
+		UPDATE users SET user_pwd
+		= #{user_pwd},user_name = #{user_name}, user_email = #{user_email}, user_deptno = #{user_deptno},
+		user_position = #{user_position},user_checkn = #{user_checkn} WHERE user_id=#{user_id}
+	</update>
+	
+	
+   
+</mapper>

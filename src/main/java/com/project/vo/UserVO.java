@@ -12,6 +12,12 @@ public class UserVO {
 	int user_deptno;
 	int user_position;
 	int user_checkn;
+	
+	String user_deptname;
+	String user_posiname;
+	
+	
+	
 	public String getUser_id() {
 		return user_id;
 	}
@@ -61,11 +67,26 @@ public class UserVO {
 	public void setUser_checkn(int user_checkn) {
 		this.user_checkn = user_checkn;
 	}
+	public String getUser_deptname() {
+		return user_deptname;
+	}
+	public void setUser_deptname(String user_deptname) {
+		this.user_deptname = user_deptname;
+	}
+	public String getUser_posiname() {
+		return user_posiname;
+	}
+	public void setUser_posiname(String user_posiname) {
+		this.user_posiname = user_posiname;
+	}
 	@Override
 	public String toString() {
 		return "UserVO [user_id=" + user_id + ", user_pwd=" + user_pwd + ", user_name=" + user_name + ", user_email="
 				+ user_email + ", user_image=" + user_image + ", user_deptno=" + user_deptno + ", user_position="
-				+ user_position + ", user_checkn=" + user_checkn + "]";
+				+ user_position + ", user_checkn=" + user_checkn + ", user_deptname=" + user_deptname
+				+ ", user_posiname=" + user_posiname + "]";
 	}
+	
+	
 	
 }
