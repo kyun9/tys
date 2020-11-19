@@ -23,9 +23,8 @@ h3 {
 	text-align: center;
 }
 
-
-#buttonDiv{
-margin: 0 auto;
+#buttonDiv {
+	margin: 0 auto;
 	width: 560px;
 	text-align: center;
 }
@@ -40,37 +39,49 @@ margin: 0 auto;
 		function moveWrite() {
 			location.href = "/tys/board/write";
 		}
-	</script>
-<div id ="buttonDiv">
-	<!-- 키워드 검색 폼 -->
-	<h3 class="display-3">게시판</h3>
-	<!-- 키워드 검색 폼 -->
-	<form name="form1" method="get" action="/tys/board/selectedList"
-		class="form-inline my-2 my-lg-0">
-		 <select name="searchType" class="form-control">
-			<!-- 검색조건을 검색처리후 결과화면에 보여주기위해  c:out 출력태그 사용, 삼항연산자 -->
-			<option value="b_userid">작성자</option>
-			<option value="b_content">내용</option>
-			<option value="b_title">제목</option>
-		</select> <input type="hidden" value="search" id="action" name="action">
-		<input class="form-control mr-sm-2" name="keyword"> <input
-			type="submit" class="btn btn-secondary my-2 my-sm-0" value="조회">
-			
-			<button class="btn btn-danger	" type="button" id="btnWrite"
-		onclick="moveWrite()">글쓰기</button>
-	</form>
 
-	<br>
-	
-	<button class="btn btn-danger" type="button" id="${dept.d_name}"
-			onclick="location.href='/tys/board/list?teamNum=0'">전체</button>
-	<c:forEach var="dept" items="${deptList}">
-		<button class="btn btn-danger" type="button" id="${dept.d_name}"
-			onclick="location.href='/tys/board/list?teamNum=${dept.d_num}'">${dept.d_name}</button>
-	</c:forEach>
+		function changeValue(e) {
+			var val = $(e).attr('id')
+			
+			if(val ==9){
+				location.href ="/tys/board/list";
+			}else{
+				$('#form1').attr("action", "/tys/board/list");
+				$('#teamNum').attr('value', val);
+				form1.submit();				
+			}
+		}
+	</script>
+	<div id="buttonDiv">
+		<!-- 키워드 검색 폼 -->
+		<h3 class="display-3">게시판</h3>
+		<!-- 키워드 검색 폼 -->
+		<form name="form1" id="form1" method="get" action="/tys/board/selectedList"
+			class="form-inline my-2 my-lg-0">
+			<select name="searchType" class="form-control">
+				<!-- 검색조건을 검색처리후 결과화면에 보여주기위해  c:out 출력태그 사용, 삼항연산자 -->
+				<option value="b_userid">작성자</option>
+				<option value="b_content">내용</option>
+				<option value="b_title">제목</option>
+			</select> <input type="hidden" value="search" id="action" name="action">
+			<input class="form-control mr-sm-2" name="keyword"> <input
+				type="submit" class="btn btn-secondary my-2 my-sm-0" value="조회">
+			<button class="btn btn-danger	" type="button" id="btnWrite"
+				onclick="moveWrite()">글쓰기</button>
+
+			<input type="hidden" name="teamNum" id="teamNum">
+			<button class="btn btn-danger" type="button" id="9"
+				onclick="javascript:changeValue(this)">전체</button>
+			<c:forEach var="dept" items="${deptList}">
+				<button class="btn btn-danger" type="button" id="${dept.d_num}"
+					onclick="javascript:changeValue(this)">${dept.d_name}</button>
+			</c:forEach>
+		</form>
+		<br>
 	</div>
 
 	<br>
+
 	<div class="contianer">
 		<table class="table table-bordered table-hover table-striped"
 			style="width: 50%; text-align: center;">
@@ -111,35 +122,39 @@ margin: 0 auto;
 
 
 	<br>
-	
+
 	<!-- 페이징 -->
-	<nav aria-label="..." style="align-items:center; width: 50%; float:none; margin:0 auto">
-	<ul class="pagination pagination-sm" >	
-	<c:if test="${paging != null}">
-		<c:if test="${paging.startPage != 1 }">	
-			<li class="page-item"><a class="page-link" href="list?nowPage=${paging.startPage - 1 }&cntPerPage=${paging.cntPerPage}">&lt;</a></li>
-			<!-- 이전으로 이동 -->
-		</c:if>
-		<c:forEach begin="${paging.startPage }" end="${paging.endPage }"
-			var="p">
-			<c:choose>
-				<c:when test="${p == paging.nowPage }">
-					<li class="page-item active" aria-current="page">
-        <span class="page-link"><b>${p}</b><span class="sr-only">(current)</span>
-        </span></li>
-				</c:when>
-				<c:when test="${p != paging.nowPage }">
-					<c:if test="${p > paging.startPage}">
-					</c:if>
-					<li class="page-item"><a class="page-link" href="list?nowPage=${p }&cntPerPage=${paging.cntPerPage}">${p }</a></li>
-				</c:when>
-			</c:choose>
-		</c:forEach>
-		<c:if test="${paging.endPage != paging.lastPage}">
-			<li class="page-item"><a class="page-link" href="list?nowPage=${paging.endPage+1 }&cntPerPage=${paging.cntPerPage}">&gt;</a></li>
-			<!-- 뒷 페이지로 이동 -->
-		</c:if>
-		</c:if>
+	<nav aria-label="..."
+		style="align-items: center; width: 50%; float: none; margin: 0 auto">
+		<ul class="pagination pagination-sm">
+			<c:if test="${paging != null}">
+				<c:if test="${paging.startPage != 1 }">
+					<li class="page-item"><a class="page-link"
+						href="list?nowPage=${paging.startPage - 1 }&cntPerPage=${paging.cntPerPage}">&lt;</a></li>
+					<!-- 이전으로 이동 -->
+				</c:if>
+				<c:forEach begin="${paging.startPage }" end="${paging.endPage }"
+					var="p">
+					<c:choose>
+						<c:when test="${p == paging.nowPage }">
+							<li class="page-item active" aria-current="page"><span
+								class="page-link"><b>${p}</b><span class="sr-only">(current)</span>
+							</span></li>
+						</c:when>
+						<c:when test="${p != paging.nowPage }">
+							<c:if test="${p > paging.startPage}">
+							</c:if>
+							<li class="page-item"><a class="page-link"
+								href="list?nowPage=${p }&cntPerPage=${paging.cntPerPage}">${p }</a></li>
+						</c:when>
+					</c:choose>
+				</c:forEach>
+				<c:if test="${paging.endPage != paging.lastPage}">
+					<li class="page-item"><a class="page-link"
+						href="list?nowPage=${paging.endPage+1 }&cntPerPage=${paging.cntPerPage}">&gt;</a></li>
+					<!-- 뒷 페이지로 이동 -->
+				</c:if>
+			</c:if>
 		</ul>
 	</nav>
 	<script

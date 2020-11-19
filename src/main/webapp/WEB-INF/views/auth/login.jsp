@@ -30,7 +30,7 @@
 </head>
 
 <body width="100%" height="100%"
-	style="background-color: #f8f9fa !important">
+	style="background-color: black !important">
 
 	<script>
 		function login() {

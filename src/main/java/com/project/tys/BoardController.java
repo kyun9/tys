@@ -1,6 +1,9 @@
 package com.project.tys;
 
+import java.util.Enumeration;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -34,35 +37,30 @@ public class BoardController {
 	@RequestMapping(value = "/list")
 	public ModelAndView boardList(String nowPage, String cntPerPage, String teamNum) throws Exception {
 		ModelAndView mv = new ModelAndView();
+		List<DeptVO> deptList = getInfoService.getDeptList();
 		List<BoardVO> list = null;
-		
-		
-//	
-//		PagingVO page = new PagingVO(boardService.countBoard(), Integer.parseInt(nowPage),
-//				Integer.parseInt(cntPerPage));
-				
-		if(teamNum == null || teamNum=="" || teamNum.equals("0")) {
-			list = boardService.selectAll();
-		}else{
+
+		if (nowPage == null && cntPerPage == null) {
+			nowPage = "1";
+			cntPerPage = "5"; // 페이지당 게시물 수
+		} else if (nowPage == null) {
+			nowPage = "1";
+		} else if (cntPerPage == null) {
+			cntPerPage = "5";
+		}
+
+		PagingVO page = new PagingVO(boardService.countBoard(), Integer.parseInt(nowPage),
+				Integer.parseInt(cntPerPage));
+
+		if (teamNum == null || teamNum == "" || teamNum.equals("0")) {
+			list = boardService.selectBoard(page);
+		} else {
 			list = dao.searchTeam(Integer.parseInt(teamNum));
 		}
-		
-//		if (nowPage == null && cntPerPage == null) {
-//			nowPage = "1";
-//			cntPerPage = "5"; // 페이지당 게시물 수
-//		} else if (nowPage == null) {
-//			nowPage = "1";
-//		} else if (cntPerPage == null) {
-//			cntPerPage = "5";
-//		}
-//
-	
-//		List<BoardVO> list = boardService.selectBoard(page);
-		List<DeptVO> deptList = getInfoService.getDeptList();
 
 		mv.setViewName("board/board");
 		mv.addObject("list", list);
-//		mv.addObject("paging", page);
+		mv.addObject("paging", page);
 		mv.addObject("deptList", deptList);
 
 		return mv;
@@ -146,13 +144,27 @@ public class BoardController {
 		ModelAndView mav = new ModelAndView();
 		List<DeptVO> deptList = getInfoService.getDeptList();
 		
+		if (nowPage == null && cntPerPage == null) {
+			nowPage = "1";
+			cntPerPage = "5"; // 페이지당 게시물 수
+		} else if (nowPage == null) {
+			nowPage = "1";
+		} else if (cntPerPage == null) {
+			cntPerPage = "5";
+		}
+
+		PagingVO page = new PagingVO(boardService.countBoard(), Integer.parseInt(nowPage),
+				Integer.parseInt(cntPerPage)); 
+		
+		
 		if (action != null && action.equals("search")) {
 			mav.addObject("list", dao.searchTypeList(searchType, keyword));
 		} else {
-			mav.addObject("list", boardService.selectAll());
+			mav.addObject("list", boardService.selectBoard(page));
 		}
 		mav.setViewName("board/board");
 		mav.addObject("deptList", deptList);
+		mav.addObject("paging", page);
 		
 		return mav;
 	}

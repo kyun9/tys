@@ -8,10 +8,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- 게시글 전체 불러오기 -->
 	<select id="selectAll" resultType="com.project.vo.BoardVO">
 		<![CDATA[
-        select b.*, d.d_name 'b_deptName'
-		from boards b join dept d on b.b_type = d.d_num
-		order by b.b_num desc;
-    	]]>
+		select  b.*, d.d_name 'b_deptName'
+from (select @ROWNUM:=@ROWNUM+1 as RNUM, 
+	a.* from boards as a,
+          (select @ROWNUM:=0) as r 
+           order by b_num DESC) as b join dept d on b.b_type = d.d_num
+           where RNUM>=#{start} and RNUM<=#{end} 
+   ]]>
 	</select>
 	
 	<!-- 부서별 게시글 불러오기 -->
@@ -82,11 +85,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<!-- 게시글 검색하기 -->
 	<select id="listAll" resultType="com.project.vo.BoardVO">
-		select b.*, d.d_name 'b_deptName'
-		from boards b join dept d on b.b_type = d.d_num
+		select  b.*, d.d_name 'b_deptName'
+from (select @ROWNUM:=@ROWNUM+1 as RNUM, 
+	a.* from boards as a,
+          (select @ROWNUM:=0) as r 
+           order by b_num DESC) as b join dept d on b.b_type = d.d_num
+           
 		<!-- WHERE절을 include 태그로 삽입 -->
-		<include refid="search"></include>
-		ORDER BY b_num DESC
+		<include refid="search"></include> 
+		
 	</select>
 
 	<!-- 반복되는 sql의 일부를 sql태그를 이용하여 따로 빼둘수 있다. -->
@@ -94,7 +101,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<choose>
 			<!-- 검색옵션이 전체 검색일 경우 -->
 			<when test="searchOption == 'all'">
-				WHERE b.b_title like CONCAT('%',#{keyword},'%')
+				WHERE b.b_title like CONCAT('%',#{keyword},'%') 
 				OR b.b_content like CONCAT('%',#{keyword},'%')
 				OR b.b_userid like CONCAT('%',#{keyword},'%')
 			</when>
@@ -117,9 +124,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- 페이징 처리 후 게시글 조회 -->
 	<select id="selectBoard" resultType="com.project.vo.BoardVO">
    <![CDATA[
-		select b.* from (select @ROWNUM:=@ROWNUM+1 as RNUM, a.* from boards as a,
-                        (select @ROWNUM:=0) as r order by b_num DESC) as b
-                        where RNUM>=#{start} and RNUM<=#{end} 
+		select  b.*, d.d_name 'b_deptName'
+from (select @ROWNUM:=@ROWNUM+1 as RNUM, 
+	a.* from boards as a,
+          (select @ROWNUM:=0) as r 
+           order by b_num DESC) as b join dept d on b.b_type = d.d_num
+           where RNUM>=#{start} and RNUM<=#{end} 
    ]]>
 	</select>
 </mapper>
