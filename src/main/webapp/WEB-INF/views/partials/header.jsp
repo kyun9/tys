@@ -8,6 +8,15 @@
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<style>
+div#headerBtn {
+	margin : 0;
+	position:absolute;
+	top : 15%;
+	left: 50%;
+	transform : translate(-50%, -50%);
+}
+</style>
 
 <!-- 네이비게이터 -->
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -54,11 +63,17 @@
 </script>
 
 
-<button type="button" id="btn" onclick="javascript:moveBoard()">게시판</button>
-<button type="button" id="btn" onclick="javascript:moveNotice()">공지사항</button>
-<button type="button" id="btn" onclick="javascript:moveSearchUser()">회원조회</button>
-<c:if test="${userInfo.user_position != 3}">
-	<button type="button" id="btn" onclick="javascript:moveRegister()">회원등록</button>
-</c:if>
+<div id=headerBtn>
+	<button type="button" class="btn btn-primary" value="board" id="btn"
+		onclick="javascript:moveBoard()">게시판</button>
+	<button type="button" class="btn btn-primary" value="notice" id="btn"
+		onclick="javascript:moveNotice()">공지사항</button>
+	<button type="button" class="btn btn-primary" value="user" id="btn"
+		onclick="javascript:moveSearchUser()">회원조회</button>
+	<c:if test="${userInfo.user_position != 3}">
+		<button type="button" class="btn btn-danger" value="regUser" id="btn"
+			onclick="javascript:moveRegister()">회원등록</button>
+	</c:if>
+</div>
 <br><br><br><br>
 

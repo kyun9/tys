@@ -36,6 +36,11 @@ public class BoardController {
 		ModelAndView mv = new ModelAndView();
 		List<BoardVO> list = null;
 		
+		
+//	
+//		PagingVO page = new PagingVO(boardService.countBoard(), Integer.parseInt(nowPage),
+//				Integer.parseInt(cntPerPage));
+				
 		if(teamNum == null || teamNum=="" || teamNum.equals("0")) {
 			list = boardService.selectAll();
 		}else{
@@ -51,9 +56,7 @@ public class BoardController {
 //			cntPerPage = "5";
 //		}
 //
-//		PagingVO page = new PagingVO(boardService.countBoard(), Integer.parseInt(nowPage),
-//				Integer.parseInt(cntPerPage));
-		
+	
 //		List<BoardVO> list = boardService.selectBoard(page);
 		List<DeptVO> deptList = getInfoService.getDeptList();
 
@@ -141,13 +144,16 @@ public class BoardController {
 	public ModelAndView selectedList(String action, String searchType, String keyword, String nowPage,
 			String cntPerPage) throws Exception {
 		ModelAndView mav = new ModelAndView();
-
+		List<DeptVO> deptList = getInfoService.getDeptList();
+		
 		if (action != null && action.equals("search")) {
 			mav.addObject("list", dao.searchTypeList(searchType, keyword));
 		} else {
 			mav.addObject("list", boardService.selectAll());
 		}
 		mav.setViewName("board/board");
+		mav.addObject("deptList", deptList);
+		
 		return mav;
 	}
 }

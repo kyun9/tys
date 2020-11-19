@@ -8,9 +8,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- 게시글 전체 불러오기 -->
 	<select id="selectAll" resultType="com.project.vo.NoticeBoardVO">
 		<![CDATA[
-        select * 
-        from notices 
-        order by n_num DESC
+        select n.*, d.d_name 'n_deptName'
+        from notices n join dept d on n.n_type = d.d_num 
+        order by n.n_num DESC
     	]]>
 	</select>
 
@@ -87,16 +87,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</sql>
 	<!-- 페이징처리 -->
 	<select id="selectPageCount" resultType="int">
-		select count(*) from
-		notices
+		select count(*) from notices
 	</select>
 
 	<!-- 페이징 처리 후 게시글 조회 -->
 	<select id="selectBoard" resultType="com.project.vo.NoticeBoardVO">
    <![CDATA[
-		select n.* from (select @ROWNUM:=@ROWNUM+1 as RNUM, a.* from notices as a,
-                        (select @ROWNUM:=0) as r order by n_num DESC) as b
-                        where RNUM>=#{start} and RNUM<=#{end} 
+		select b.* from 
+		(select @ROWNUM:=@ROWNUM+1 as RNUM, a.* from notices as a,
+		(select @ROWNUM:=0) as r order by n_num DESC) as b
+		where RNUM>=#{start} and RNUM<=#{end} 
    ]]>
 	</select>
 </mapper>

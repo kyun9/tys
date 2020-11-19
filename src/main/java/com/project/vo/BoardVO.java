@@ -2,7 +2,7 @@ package com.project.vo;
 
 import java.sql.Timestamp;
 
-public class BoardVO {
+public class BoardVO extends PagingVO{
 	
 	private int b_num;			// 글번호
 	private String b_title;		// 제목
@@ -97,6 +97,13 @@ public class BoardVO {
 
 	public void setB_deptName(String b_deptName) {
 		this.b_deptName = b_deptName;
+	}
+
+	@Override
+	public String toString() {
+		return "BoardVO [b_num=" + b_num + ", b_title=" + b_title + ", b_content=" + b_content + ", b_date=" + b_date
+				+ ", b_cnt=" + b_cnt + ", b_userid=" + b_userid + ", b_type=" + b_type + ", b_update=" + b_update
+				+ ", b_updateuser=" + b_updateuser + ", b_deptName=" + b_deptName + "]";
 	}
 	
 	

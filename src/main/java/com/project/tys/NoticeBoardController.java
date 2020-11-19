@@ -11,8 +11,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.project.dao.NoticeBoardDAOImpl;
+import com.project.service.GetInfoService;
 import com.project.service.NoticeBoardServiceI;
+import com.project.vo.BoardVO;
+import com.project.vo.DeptVO;
 import com.project.vo.NoticeBoardVO;
+import com.project.vo.PagingVO;
 
 /**
  * Handles requests for the application home page.
@@ -25,16 +29,39 @@ public class NoticeBoardController {
 	NoticeBoardDAOImpl dao;
 	@Autowired
 	NoticeBoardServiceI noticeBoardService;
+	@Autowired
+	GetInfoService getInfoService;
 
 	// 게시글 전체 불러오기
 	@RequestMapping(value = "/list")
-	public ModelAndView boardList() throws Exception {
+	public ModelAndView boardList(String nowPage, String cntPerPage) throws Exception {
 
-		List<NoticeBoardVO> list = noticeBoardService.selectAll();
 		ModelAndView mv = new ModelAndView();
+		if (nowPage == null && cntPerPage == null) {
+			nowPage = "1";
+			cntPerPage = "5"; // 페이지당 게시물 수
+		} else if (nowPage == null) {
+			nowPage = "1";
+		} else if (cntPerPage == null) {
+			cntPerPage = "5";
+		}
+
+		PagingVO page = new PagingVO(noticeBoardService.countBoard(), Integer.parseInt(nowPage),
+				Integer.parseInt(cntPerPage));
+		List<NoticeBoardVO> rlist = noticeBoardService.selectAll();
+		List<NoticeBoardVO> list = noticeBoardService.selectBoard(page);
+		List<DeptVO> deptList = getInfoService.getDeptList();
+
+		for (NoticeBoardVO d : rlist) {
+			System.out.println(d.getN_deptName());
+
+		}
 
 		mv.setViewName("noticeBoard/noticeBoard");
 		mv.addObject("list", list);
+		mv.addObject("rlist", rlist);
+		mv.addObject("paging", page);
+		mv.addObject("deptList", deptList);
 
 		return mv;
 	}

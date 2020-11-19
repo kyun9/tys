@@ -8,6 +8,24 @@
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
+<style>
+form {
+	margin: 0 auto;
+	width: 600px;
+}
+
+input[type=text], select {
+	width: 50%;
+	padding: 12px 20px;
+	margin: 8px 0;
+	display: inline-block;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	box-sizing: border-box;
+}
+
+</style>
+
 <body>
 
 	<!-- partial:partials/header.jsp -->

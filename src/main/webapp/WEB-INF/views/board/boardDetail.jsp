@@ -8,13 +8,35 @@
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
+<style>
+form {
+	margin: 0 auto;
+	width: 600px;
+}
+
+input[type=text], select {
+	width: 50%;
+	padding: 12px 20px;
+	margin: 8px 0;
+	display: inline-block;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	box-sizing: border-box;
+}
+
+
+
+</style>
+
 <body>
 	<!-- partial:partials/header.jsp -->
 	<%@ include file="../partials/header.jsp"%>
 	<!-- partial -->
 
 
-	<h2>게시글 조회</h2>
+	<h2 style="margin: 0 auto;
+	width: 560px;
+	text-align: center;">게시글 조회</h2>
 
 	<form name="updatForm" method="get" action="/tys/board/boardUpdate">
 		<input name="b_num" type="hidden" value="${detail.b_num }">
@@ -41,16 +63,17 @@
 			<!-- 권한에 따라 수정하기 버튼 표시 여부 결정 -->
 			<c:if
 				test="${(userInfo.user_position == 1) or (userInfo.user_id == detail.b_userid) or (userInfo.user_position == 2 and userInfo.user_deptno == detail.b_type) }">
-				<button type="submit">수정하기</button>
+				<button type="submit" class="btn btn-primary">수정하기</button>
 			</c:if>
+			<!-- 총괄관리자 또는 이 게시글의 작성자 또는 해당 부서 관리자일 경우에만 삭제 버튼 표시 -->
+			<c:if
+				test="${(userInfo.user_position == 1) or (userInfo.user_id == detail.b_userid) or (userInfo.user_position == 2 and userInfo.user_deptno == detail.b_type) }">
+				<button id="boardDelete" class="btn btn-secondary">삭제하기</button>
+			</c:if>
+
 		</div>
 	</form>
 
-	<!-- 총괄관리자 또는 이 게시글의 작성자 또는 해당 부서 관리자일 경우에만 삭제 버튼 표시 -->
-	<c:if
-		test="${(userInfo.user_position == 1) or (userInfo.user_id == detail.b_userid) or (userInfo.user_position == 2 and userInfo.user_deptno == detail.b_type) }">
-		<button id="boardDelete">삭제하기</button>
-	</c:if>
 
 
 	<script>

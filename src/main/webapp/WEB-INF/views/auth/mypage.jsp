@@ -15,18 +15,53 @@
 
 	<title>test</title>
 </head>
+<style>
+form {
+	margin: 0 auto;
+	width: 400px;
+}
 
+input[type=text], select {
+	width: 100%;
+	padding: 12px 20px;
+	margin: 8px 0;
+	display: inline-block;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	box-sizing: border-box;
+}
+
+input[type=email], select {
+	width: 100%;
+	padding: 12px 20px;
+	margin: 8px 0;
+	display: inline-block;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	box-sizing: border-box;
+}
+
+input[type=password], select {
+	width: 100%;
+	padding: 12px 20px;
+	margin: 8px 0;
+	display: inline-block;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	box-sizing: border-box;
+}
+
+#buttonDiv{
+margin: 0 auto;
+	width: 560px;
+	text-align : center;	
+}
+</style>
 <body>
 	<!-- partial:partials/header.jsp -->
 	<%@ include file="../partials/header.jsp"%>
 	<!-- partial -->
 
-	<h3>My Page</h3>
-	${deptInfo.d_name} ${userInfo.user_id} ${positionInfo.p_name}의 마이페이지입니다.
-
-
-	<a href="#">회원수정</a>
-	<a href="#">작성글보기</a>
 
 	<script>
 
@@ -114,7 +149,19 @@
 			}
 		}
 	</script>
+	<div id ="buttonDiv">
+	
+	<h3>My Page</h3>
+	${deptInfo.d_name} ${userInfo.user_id} ${positionInfo.p_name}의 마이페이지입니다.
+
+
+	<a href="#">회원수정</a>
+	<a href="#">작성글보기</a>
+	
+
+	
 	<h1>회원 수정하기</h1>
+		</div>
 	<form method="post" action="/tys/updateUserInfo" id="updateForm" name="registerForm" enctype="multipart/form-data">
 		<img src="/tys/resources/users/${userInfo.user_image}" id="photo" width="150px" height="150px" /><br>
 		<input type="file" name="user_image" id="img" placeholder="이미지 선택" accept="image/*"
@@ -126,7 +173,6 @@
 		<br>이메일 : <input type="email" name="user_email" id="email" value="${userInfo.user_email}">
 		<br><input type="submit" value="수정하기" />
 	</form>
-
 	<!-- Optional JavaScript -->
 	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
 

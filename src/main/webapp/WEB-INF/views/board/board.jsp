@@ -13,7 +13,23 @@
 
 <title>test</title>
 </head>
+<style>
+table {
+	margin-left: auto;
+	margin-right: auto;
+}
 
+h3 {
+	text-align: center;
+}
+
+
+#buttonDiv{
+margin: 0 auto;
+	width: 560px;
+	text-align: center;
+}
+</style>
 <body>
 	<!-- partial:partials/header.jsp -->
 	<%@ include file="../partials/header.jsp"%>
@@ -25,13 +41,13 @@
 			location.href = "/tys/board/write";
 		}
 	</script>
-
-	<h2>게시판</h2>
-
+<div id ="buttonDiv">
+	<!-- 키워드 검색 폼 -->
+	<h3 class="display-3">게시판</h3>
 	<!-- 키워드 검색 폼 -->
 	<form name="form1" method="get" action="/tys/board/selectedList"
 		class="form-inline my-2 my-lg-0">
-		<select name="searchType">
+		 <select name="searchType" class="form-control">
 			<!-- 검색조건을 검색처리후 결과화면에 보여주기위해  c:out 출력태그 사용, 삼항연산자 -->
 			<option value="b_userid">작성자</option>
 			<option value="b_content">내용</option>
@@ -39,6 +55,9 @@
 		</select> <input type="hidden" value="search" id="action" name="action">
 		<input class="form-control mr-sm-2" name="keyword"> <input
 			type="submit" class="btn btn-secondary my-2 my-sm-0" value="조회">
+			
+			<button class="btn btn-danger	" type="button" id="btnWrite"
+		onclick="moveWrite()">글쓰기</button>
 	</form>
 
 	<br>
@@ -49,7 +68,7 @@
 		<button class="btn btn-danger" type="button" id="${dept.d_name}"
 			onclick="location.href='/tys/board/list?teamNum=${dept.d_num}'">${dept.d_name}</button>
 	</c:forEach>
-
+	</div>
 
 	<br>
 	<div class="contianer">
@@ -88,14 +107,12 @@
 		</table>
 	</div>
 	<hr>
-	<button class="btn btn-danger	" type="button" id="btnWrite"
-		onclick="moveWrite()">글쓰기</button>
 
 
 
 	<br>
 	
-<%-- 	<!-- 페이징 -->
+	<!-- 페이징 -->
 	<nav aria-label="..." style="align-items:center; width: 50%; float:none; margin:0 auto">
 	<ul class="pagination pagination-sm" >	
 	<c:if test="${paging != null}">
@@ -113,7 +130,6 @@
 				</c:when>
 				<c:when test="${p != paging.nowPage }">
 					<c:if test="${p > paging.startPage}">
-
 					</c:if>
 					<li class="page-item"><a class="page-link" href="list?nowPage=${p }&cntPerPage=${paging.cntPerPage}">${p }</a></li>
 				</c:when>
@@ -125,7 +141,7 @@
 		</c:if>
 		</c:if>
 		</ul>
-	</nav> --%>
+	</nav>
 	<script
 		src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
 		integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"

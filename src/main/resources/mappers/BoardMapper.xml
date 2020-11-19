@@ -82,7 +82,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<!-- 게시글 검색하기 -->
 	<select id="listAll" resultType="com.project.vo.BoardVO">
-		SELECT * from boards
+		select b.*, d.d_name 'b_deptName'
+		from boards b join dept d on b.b_type = d.d_num
 		<!-- WHERE절을 include 태그로 삽입 -->
 		<include refid="search"></include>
 		ORDER BY b_num DESC
@@ -93,9 +94,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<choose>
 			<!-- 검색옵션이 전체 검색일 경우 -->
 			<when test="searchOption == 'all'">
-				WHERE b_title like CONCAT('%',#{keyword},'%')
-				OR b_content like CONCAT('%',#{keyword},'%')
-				OR b_userid like CONCAT('%',#{keyword},'%')
+				WHERE b.b_title like CONCAT('%',#{keyword},'%')
+				OR b.b_content like CONCAT('%',#{keyword},'%')
+				OR b.b_userid like CONCAT('%',#{keyword},'%')
 			</when>
 			<!-- 전체 검색이 아닐 경우 -->
 			<otherwise>

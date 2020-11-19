@@ -28,14 +28,40 @@
 </script>
 
 </head>
+<style>
 
+input[type=text], select {
+	width: 50%;
+	padding: 12px 20px;
+	margin: 8px 0;
+	display: inline-block;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	box-sizing: border-box;
+}
+
+textarea[type=text], select {
+	width: 50%;
+	padding: 12px 20px;
+	margin: 8px 0;
+	display: inline-block;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	box-sizing: border-box;
+}
+#buttonDiv{
+margin: 0 auto;
+	width: 560px;
+	text-align : center;	
+}
+</style>
 <body>
 
 <!-- partial:partials/header.jsp -->
 	<%@ include file="../partials/header.jsp"%>
 	<!-- partial -->
 
-
+<div id = "buttonDiv">
 <h2>게시물 작성</h2>
 <form name ="form1" method="post" action="insert">
 	
@@ -56,6 +82,7 @@
       <button type="reset">취소</button>
    </div>
 </form>
+</div>
 <script
 		src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
 		integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
