@@ -66,13 +66,13 @@
 				</tr>
 			</thead>
 
-			<c:if test="${rlist } eq null">
+			<c:if test="${list } eq null">
 				<tr>
 					<td colspan="5">등록된 게시글이 없습니다.</td>
 				</tr>
 			</c:if>
 
-			<c:forEach var="row" items="${rlist }">
+			<c:forEach var="row" items="${list }">
 				<tr>
 					<td><c:out value="${row.b_num}"></c:out></td>
 					<td><a href="/tys/board/boardDetail?b_num=${row.b_num}"> <c:out
@@ -94,6 +94,8 @@
 
 
 	<br>
+	
+<%-- 	<!-- 페이징 -->
 	<nav aria-label="..." style="align-items:center; width: 50%; float:none; margin:0 auto">
 	<ul class="pagination pagination-sm" >	
 	<c:if test="${paging != null}">
@@ -123,7 +125,7 @@
 		</c:if>
 		</c:if>
 		</ul>
-	</nav>
+	</nav> --%>
 	<script
 		src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
 		integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"

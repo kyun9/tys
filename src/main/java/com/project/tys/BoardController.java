@@ -34,41 +34,32 @@ public class BoardController {
 	@RequestMapping(value = "/list")
 	public ModelAndView boardList(String nowPage, String cntPerPage, String teamNum) throws Exception {
 		ModelAndView mv = new ModelAndView();
-		boolean check = false;
-		List<BoardVO> rlist = null;
+		List<BoardVO> list = null;
 		
-		System.out.println(teamNum);
-		if (teamNum != null) {
-			int teamN = Integer.parseInt(teamNum);
-			if (teamN == 0) {
-				rlist = boardService.selectAll();
-			} else {
-				rlist = dao.searchTeam(teamN);
-			}
-			check = true;
+		if(teamNum == null || teamNum=="" || teamNum.equals("0")) {
+			list = boardService.selectAll();
+		}else{
+			list = dao.searchTeam(Integer.parseInt(teamNum));
 		}
 		
-		if (nowPage == null && cntPerPage == null) {
-			nowPage = "1";
-			cntPerPage = "5"; // 페이지당 게시물 수
-		} else if (nowPage == null) {
-			nowPage = "1";
-		} else if (cntPerPage == null) {
-			cntPerPage = "5";
-		}
-
-		PagingVO page = new PagingVO(boardService.countBoard(), Integer.parseInt(nowPage),
-				Integer.parseInt(cntPerPage));
-		if (!check) {
-			rlist = boardService.selectAll();
-		}
-		List<BoardVO> list = boardService.selectBoard(page);
+//		if (nowPage == null && cntPerPage == null) {
+//			nowPage = "1";
+//			cntPerPage = "5"; // 페이지당 게시물 수
+//		} else if (nowPage == null) {
+//			nowPage = "1";
+//		} else if (cntPerPage == null) {
+//			cntPerPage = "5";
+//		}
+//
+//		PagingVO page = new PagingVO(boardService.countBoard(), Integer.parseInt(nowPage),
+//				Integer.parseInt(cntPerPage));
+		
+//		List<BoardVO> list = boardService.selectBoard(page);
 		List<DeptVO> deptList = getInfoService.getDeptList();
 
 		mv.setViewName("board/board");
 		mv.addObject("list", list);
-		mv.addObject("rlist", rlist);
-		mv.addObject("paging", page);
+//		mv.addObject("paging", page);
 		mv.addObject("deptList", deptList);
 
 		return mv;
