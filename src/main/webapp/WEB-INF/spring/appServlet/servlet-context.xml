@@ -42,8 +42,9 @@
 			<mapping path="/" />
 			<mapping path="/mypage" />
 			<mapping path="/register" />
-<!-- 			<mapping path="/board/*" /> -->
-<!-- 			<mapping path="/notice/*" /> -->
+			<mapping path="/board/**/" />
+			<mapping path="/noticeBoard/**/" />
+			<mapping path="/searchUser/**/" />
 			<beans:ref bean="authenticationInterceptor" />
 		</interceptor>
 	</interceptors>

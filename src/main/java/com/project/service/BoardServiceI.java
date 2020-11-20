@@ -25,7 +25,7 @@ public interface BoardServiceI {
    public void hitUp(int b_num);
    
    // 게시글 검색하기
-   public List<BoardVO> listAll(String searchOption, String keyword) throws Exception;
+   public List<BoardVO> listAll(String searchOption, String keyword, String start, String end) throws Exception;
    
    //페이징처리
    //전체 게시물 갯수

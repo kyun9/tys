@@ -23,7 +23,7 @@ public class AuthenticationInterceptor extends HandlerInterceptorAdapter {
 		if (obj == null) {
 			// 로그인이 안되어 있는 상태임으로 로그인 폼으로 다시 돌려보냄(redirect)
 			// rnow 메인화면가면 로그인 먼저하로고 설정해놈 나중에 이 부분 고치면됨
-			response.sendRedirect("login");
+			response.sendRedirect("/tys/login");
 			return false; // 더이상 컨트롤러 요청으로 가지 않도록false로 반환함
 		}
 		// preHandle의return은 컨트롤러 요청 uri로 가도 되냐 안되냐를 허가하는 의미임

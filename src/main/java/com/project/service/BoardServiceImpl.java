@@ -58,8 +58,8 @@ public class BoardServiceImpl implements BoardServiceI{
 	// 게시글 검색하기
 	// 게시글 전체 목록 boardDAO.listAll메서드 호출
 	@Override
-	public List<BoardVO> listAll(String searchOption, String keyword) throws Exception {
-		return boardDao.listAll(searchOption, keyword);
+	public List<BoardVO> listAll(String searchOption, String keyword,String start, String end) throws Exception {
+		return boardDao.listAll(searchOption, keyword, keyword, keyword);
 	}
 	
 	//페이징처리

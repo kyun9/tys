@@ -27,9 +27,9 @@ public interface BoardDAOI {
 	public void update(int b_num);
 
 	// 게시글 검색하기
-	public List<BoardVO> listAll(String searchOption, String keyword);
+	public List<BoardVO> listAll(String searchOption, String keyword , String start, String end);
 
-	public List<BoardVO> searchTypeList(String searchType, String keyword);
+	public List<BoardVO> searchTypeList(String searchType, String keyword,String start, String end);
 
 	// 전체 게시물 갯수
 	public int countBoard() throws Exception;

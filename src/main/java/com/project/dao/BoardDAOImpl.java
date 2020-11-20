@@ -56,20 +56,24 @@ public class BoardDAOImpl implements BoardDAOI {
 
 	// 게시글 검색하기
 	@Override
-	public List<BoardVO> listAll(String searchOption, String keyword) {
+	public List<BoardVO> listAll(String searchOption, String keyword , String start, String end) {
 		// 검색옵션, 키워드 맵에 저장
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("searchOption", searchOption);
 		map.put("keyword", keyword);
+		map.put("start", start);
+		map.put("end", end);
 		return sqlSession.selectList("board.listAll", map);
 	}
 
 	@Override
-	public List<BoardVO> searchTypeList(String searchOption, String keyword) {
+	public List<BoardVO> searchTypeList(String searchOption, String keyword, String start, String end) {
 		// 검색옵션, 키워드 맵에 저장
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("searchOption", searchOption);
 		map.put("keyword", keyword);
+		map.put("start", start);
+		map.put("end", end);
 		return sqlSession.selectList("board.listAll", map);
 	}
 

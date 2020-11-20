@@ -158,7 +158,7 @@ public class BoardController {
 		
 		
 		if (action != null && action.equals("search")) {
-			mav.addObject("list", dao.searchTypeList(searchType, keyword));
+			mav.addObject("list", dao.searchTypeList(searchType, keyword, String.valueOf(page.getStart()), String.valueOf(page.getEnd())));
 		} else {
 			mav.addObject("list", boardService.selectBoard(page));
 		}

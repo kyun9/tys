@@ -58,6 +58,7 @@ h3 {
 		<!-- 키워드 검색 폼 -->
 		<form name="form1" id="form1" method="get" action="/tys/board/selectedList"
 			class="form-inline my-2 my-lg-0">
+			<div>
 			<select name="searchType" class="form-control">
 				<!-- 검색조건을 검색처리후 결과화면에 보여주기위해  c:out 출력태그 사용, 삼항연산자 -->
 				<option value="b_userid">작성자</option>
@@ -68,7 +69,8 @@ h3 {
 				type="submit" class="btn btn-secondary my-2 my-sm-0" value="조회">
 			<button class="btn btn-danger	" type="button" id="btnWrite"
 				onclick="moveWrite()">글쓰기</button>
-
+			</div>
+			<div id="#buttonDiv">
 			<input type="hidden" name="teamNum" id="teamNum">
 			<button class="btn btn-danger" type="button" id="9"
 				onclick="javascript:changeValue(this)">전체</button>
@@ -76,6 +78,7 @@ h3 {
 				<button class="btn btn-danger" type="button" id="${dept.d_num}"
 					onclick="javascript:changeValue(this)">${dept.d_name}</button>
 			</c:forEach>
+			</div>
 		</form>
 		<br>
 	</div>
@@ -145,7 +148,7 @@ h3 {
 							<c:if test="${p > paging.startPage}">
 							</c:if>
 							<li class="page-item"><a class="page-link"
-								href="list?nowPage=${p }&cntPerPage=${paging.cntPerPage}">${p }</a></li>
+								href="selectedList?nowPage=${p }&cntPerPage=${paging.cntPerPage}">${p }</a></li>
 						</c:when>
 					</c:choose>
 				</c:forEach>
