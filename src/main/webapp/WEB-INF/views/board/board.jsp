@@ -125,12 +125,10 @@ h3 {
 
 
 	<br>
-
 	<!-- 페이징 -->
 	<nav aria-label="..."
 		style="align-items: center; width: 50%; float: none; margin: 0 auto">
 		<ul class="pagination pagination-sm">
-			<c:if test="${paging != null}">
 				<c:if test="${paging.startPage != 1 }">
 					<li class="page-item"><a class="page-link"
 						href="list?nowPage=${paging.startPage - 1 }&cntPerPage=${paging.cntPerPage}">&lt;</a></li>
@@ -157,7 +155,6 @@ h3 {
 						href="list?nowPage=${paging.endPage+1 }&cntPerPage=${paging.cntPerPage}">&gt;</a></li>
 					<!-- 뒷 페이지로 이동 -->
 				</c:if>
-			</c:if>
 		</ul>
 	</nav>
 	<script

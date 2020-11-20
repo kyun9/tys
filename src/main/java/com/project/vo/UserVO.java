@@ -79,6 +79,24 @@ public class UserVO {
 	public void setUser_posiname(String user_posiname) {
 		this.user_posiname = user_posiname;
 	}
+	
+	
+	
+	public UserVO() {
+		
+	}
+	public UserVO(String user_id, String user_pwd, String user_name, String user_email, String user_image,
+			int user_deptno, int user_position, int user_checkn) {
+		super();
+		this.user_id = user_id;
+		this.user_pwd = user_pwd;
+		this.user_name = user_name;
+		this.user_email = user_email;
+		this.user_image = user_image;
+		this.user_deptno = user_deptno;
+		this.user_position = user_position;
+		this.user_checkn = user_checkn;
+	}
 	@Override
 	public String toString() {
 		return "UserVO [user_id=" + user_id + ", user_pwd=" + user_pwd + ", user_name=" + user_name + ", user_email="

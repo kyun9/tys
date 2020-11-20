@@ -17,6 +17,49 @@
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
+<style>
+form {
+	margin: 0 auto;
+	width: 400px;
+}
+
+input[type=text], select {
+	width: 100%;
+	padding: 12px 20px;
+	margin: 8px 0;
+	display: inline-block;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	box-sizing: border-box;
+}
+
+input[type=email], select {
+	width: 100%;
+	padding: 12px 20px;
+	margin: 8px 0;
+	display: inline-block;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	box-sizing: border-box;
+}
+
+input[type=password], select {
+	width: 100%;
+	padding: 12px 20px;
+	margin: 8px 0;
+	display: inline-block;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	box-sizing: border-box;
+}
+
+#buttonDiv{
+margin: 0 auto;
+	width: 560px;
+	text-align : center;	
+}
+</style>
+
 <body>
 <!-- partial:partials/header.jsp -->
 	<%@ include file="../partials/header.jsp"%>
@@ -110,22 +153,26 @@
 		//로그인 제한 풀어주기
 		function loginChk() {
 			$('#loginCheck').val('활성화완료');
+			$('#user_checkn').attr('value', 0);
 			
 		}
 		
 	</script>
+	<div id ="buttonDiv">
+	<h1>${detail.user_id}님의 정보 수정하기</h1>
 	
-	<h1>회원 수정하기</h1>
+	</div>
 	<form method="post" action="/tys/updateUser" name="updateForm" enctype="multipart/form-data">
 		<img src="/tys/resources/users/${detail.user_image}" id="photo" width="150px" height="150px" /><br>
 		<input name="user_id" type="hidden" value="${detail.user_id}">
-		<!-- 
 			<input type="file" name="user_image" id="img" placeholder="이미지 선택" accept="image/*"
 				onchange="previewImage(this);">
 			<input type="button" id="deleteTempImage" onclick="deleteImg()" value="사진삭제"> <br> -->
 		<br>비밀번호 : <input type="password" name="user_pwd" id="pwd" value="${detail.user_name}">
 		<br>이름 : <input type="text" name="user_name" id="email" value="${detail.user_name}">
 		<br>이메일 : <input type="email" name="user_email" id="email" value="${detail.user_email}">
+		
+		<input type= "hidden" id="user_checkn" name="user_checkn" value="${detail.user_checkn}">
 		<br><label>부서</label> <select name="user_deptno" id="deptno" >
 						<c:forEach var="dept" items="${dept}">
 						<c:choose>
@@ -149,7 +196,7 @@
 							 </c:otherwise>
 							</c:choose>
 							</c:forEach>
-		<br><c:if test="${(detail.user_checkn == 5) }">로그인 제한 풀어주기:<input type="button" id="loginCheck" onclick="loginChk()" value="로그인제한"></c:if>
+		<br><c:if test="${(detail.user_checkn == 5) }">로그인 제한 풀어주기:<input type="button" id="loginCheck"  onclick="loginChk()" value="로그인제한"></c:if>
 		<br><input type="submit" value="수정하기" />
 		
 	</form>

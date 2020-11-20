@@ -158,8 +158,6 @@ margin: 0 auto;
 	<a href="#">회원수정</a>
 	<a href="#">작성글보기</a>
 	
-
-	
 	<h1>회원 수정하기</h1>
 		</div>
 	<form method="post" action="/tys/updateUserInfo" id="updateForm" name="registerForm" enctype="multipart/form-data">
