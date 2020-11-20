@@ -45,6 +45,7 @@
 			<mapping path="/board/**/" />
 			<mapping path="/noticeBoard/**/" />
 			<mapping path="/searchUser/**/" />
+			<mapping path="/userDetail/**/" />
 			<beans:ref bean="authenticationInterceptor" />
 		</interceptor>
 	</interceptors>

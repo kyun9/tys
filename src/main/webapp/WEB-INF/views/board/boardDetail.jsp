@@ -68,7 +68,7 @@ input[type=text], select {
 			<!-- 총괄관리자 또는 이 게시글의 작성자 또는 해당 부서 관리자일 경우에만 삭제 버튼 표시 -->
 			<c:if
 				test="${(userInfo.user_position == 1) or (userInfo.user_id == detail.b_userid) or (userInfo.user_position == 2 and userInfo.user_deptno == detail.b_type) }">
-				<button id="boardDelete" class="btn btn-secondary">삭제하기</button>
+				<input type="button" id="boardDelete" class="btn btn-secondary" value = "삭제"/>
 			</c:if>
 
 		</div>
